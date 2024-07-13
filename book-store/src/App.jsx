@@ -1,11 +1,12 @@
-import React from "react";
+import Login from "./components/login-signup/Login";
 
 const App = () => {
+    //! Width: 0.75
+    //! Height: 0.684
+    //! text 24 -> lg
     return (
-        <div>
-            <h2 className="text-3xl font-bold underline text-red-700">
-                Hello new branch!
-            </h2>
+        <div className="text-text-normal">
+            <Login></Login>
         </div>
     );
 };
