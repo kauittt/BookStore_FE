@@ -4,15 +4,22 @@ export default {
     theme: {
         colors: {
             //* Background
-            "bgr-main": "F4F4FF",
-            "bgr-color": "EF6B4A",
+            "bgr-main": "#F4F4FF",
+            "bgr-color": "#EF6B4A",
+            "bgr-white": "#FFFFFF",
 
             //* Text
-            "text-normal": "090937",
-            "text-color": "6251DD",
-            "text-light": "676787",
+            "text-normal": "#090937",
+            "text-color": "#6251DD",
+            "text-light": "#676787",
+            "text-white": "#FFFFFF",
+            "text-error": "#e74c3c",
         },
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ["Manrope", "sans-serif"],
+            },
+        },
     },
     plugins: [],
 };
