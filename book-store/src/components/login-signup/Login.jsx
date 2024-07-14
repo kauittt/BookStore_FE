@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useState } from "react";
 import FormButton from "./../elements/FormButton";
 import FormInput from "./../elements/FormInput";
@@ -35,9 +34,11 @@ const Login = () => {
                 : Yup.string(),
     });
 
+    console.log(window.innerHeight);
+    console.log(window.innerWidth);
     return (
         <div className="flex w-full h-screen">
-            {/*//* Image */}
+            {/*//! Image */}
             <div className="w-1/2">
                 <img
                     src="./image/Login.png"
@@ -46,7 +47,7 @@ const Login = () => {
                 />
             </div>
 
-            {/*//* Form */}
+            {/*//! Form */}
             <div className="w-1/2 flex flex-col items-center justify-evenly p-[20px]">
                 {/*//* Logo */}
                 <div className="w-[90px] h-[50px]">
@@ -59,14 +60,11 @@ const Login = () => {
 
                 {/*//* Greeting */}
                 <div className="flex flex-col w-[400px]">
-                    <p className="text-text-light font-semibold text-2xl">
-                        Welcome back!
-                    </p>
-                    <p className="font-bold text-[32px]">
+                    <h1 className="font-semibold text-3xl ">
                         {purpose === "login"
                             ? "Login to your account!"
                             : "Register your account!"}
-                    </p>
+                    </h1>
                 </div>
 
                 {/*//* Form */}
