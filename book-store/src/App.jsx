@@ -2,6 +2,7 @@ import Login from "./components/login-signup/Login";
 import BookItem from "./components/book/BookItem";
 import BookList from "./components/book/BookList";
 import BookDetail from "./components/book/BookDetail";
+import CartItem from "./components/cart/CartItem";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -88,7 +89,8 @@ const App = () => {
     //! Error Login
     return (
         <div className="text-text-normal container mx-auto cursor-default">
-            <BookDetail book={detail}></BookDetail>
+            <CartItem book={detail}></CartItem>
+            {/* <BookDetail book={detail}></BookDetail> */}
             {/* <BookList title="Classic" books={data}></BookList> */}
             {/* <Login></Login> */}
         </div>

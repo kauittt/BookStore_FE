@@ -17,6 +17,9 @@ export default {
             "text-white": "#FFFFFF",
             "text-error": "#e74c3c", // Màu đỏ
             "text-error-hover": "#c0392b", // Darker for hover
+
+            //* Border
+            border: "#cfcfcf",
         },
         extend: {
             fontFamily: {

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import FormButton from "../elements/FormButton";
 import BackNavigation from "./../elements/BackNavigation";
 
@@ -52,7 +52,7 @@ const BookDetail = (props) => {
                     </div>
 
                     {/*//* Price */}
-                    <div className="font-semibold text-3xl border-t border-b border-[#cfcfcf] py-4">
+                    <div className="font-semibold text-3xl border-t border-b border-border py-4">
                         <p
                             className=" text-text-color
                     inline-block"
