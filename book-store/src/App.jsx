@@ -1,6 +1,7 @@
 import Login from "./components/login-signup/Login";
 import BookItem from "./components/book/BookItem";
 import BookList from "./components/book/BookList";
+import BookDetail from "./components/book/BookDetail";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -9,7 +10,7 @@ const App = () => {
     //! Height: 0.585
 
     //* Semibold - Normal
-    //* 3xl - lg - sm - Normal
+    //* 3xl (Tiêu đề to) - lg (To hơn bình thường) - sm (Chú thích nhỏ) - Normal
 
     const data = [
         {
@@ -74,9 +75,21 @@ const App = () => {
         },
     ];
 
+    const detail = {
+        image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
+        price: "5.9",
+        name: "Dune",
+        author: "Frank Herbert ",
+        quantity: 10,
+        description:
+            "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
+    };
+
+    //! Error Login
     return (
-        <div className="text-text-normal container mx-auto">
-            <BookList title="Classic" books={data}></BookList>
+        <div className="text-text-normal container mx-auto cursor-default">
+            <BookDetail book={detail}></BookDetail>
+            {/* <BookList title="Classic" books={data}></BookList> */}
             {/* <Login></Login> */}
         </div>
     );

@@ -16,7 +16,7 @@ const FormInput = ({ label, type = "text", ...props }) => {
                 autoComplete="off"
                 className="bg-bgr-main p-4 h-[50px] rounded 
                     text-text-light
-                    shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]
+                    shadow-custom
                     focus:outline-none focus:ring-2 focus:ring-text-color"
                 {...field}
                 {...props}

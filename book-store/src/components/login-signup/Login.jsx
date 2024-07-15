@@ -34,8 +34,6 @@ const Login = () => {
                 : Yup.string(),
     });
 
-    console.log(window.innerHeight);
-    console.log(window.innerWidth);
     return (
         <div className="flex w-full h-screen">
             {/*//! Image */}
