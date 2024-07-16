@@ -22,9 +22,13 @@ const FormInput = ({ label, type = "text", ...props }) => {
                 {...props}
                 type={type}
             />
-            {meta.touched && meta.error ? (
-                <div className="text-text-error font-medium">{meta.error}</div>
-            ) : null}
+            <div className="h-[24px]">
+                {meta.touched && meta.error ? (
+                    <div className="text-text-error font-medium">
+                        {meta.error}
+                    </div>
+                ) : null}
+            </div>
         </div>
     );
 };
