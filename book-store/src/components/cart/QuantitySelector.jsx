@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
@@ -28,7 +27,7 @@ const QuantitySelector = (props) => {
 };
 
 QuantitySelector.propTypes = {
-    quantity: PropTypes.string,
+    quantity: PropTypes.number,
     decrement: PropTypes.func,
     increment: PropTypes.func,
 };

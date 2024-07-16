@@ -11,15 +11,18 @@ const CartItem = (props) => {
     const [quantity, setQuantity] = useState(book.quantity); // Default quantity
     const increment = () => {
         setQuantity((prev) => prev + 1);
+        props.updateTotalPrice(book.price);
     };
     const decrement = () => {
         if (quantity > 0) {
             setQuantity((prev) => prev - 1);
+            props.updateTotalPrice(-book.price);
         }
     };
 
     const calculateTotal = () => {
-        return (quantity * book.price).toFixed(2);
+        const total = (quantity * book.price).toFixed(2);
+        return total;
     };
 
     return (
@@ -28,9 +31,6 @@ const CartItem = (props) => {
             border-t border-b border-border
             h-[105px] text-center
             p-[10px] gap-[5px]
-
-            mt-[50px]
-            
             "
         >
             {/*//* Image  */}
@@ -86,6 +86,7 @@ const CartItem = (props) => {
                 text-xl hover:text-text-error 
                 transition-all duration-200 ease-in-out cursor-pointer"
                 icon={faTrash}
+                onClick={props.handleRemove}
             />
         </div>
     );
@@ -93,6 +94,8 @@ const CartItem = (props) => {
 
 CartItem.propTypes = {
     book: PropTypes.object,
+    updateTotalPrice: PropTypes.func,
+    handleRemove: PropTypes.func,
 };
 
 export default CartItem;

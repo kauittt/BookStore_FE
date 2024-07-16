@@ -3,6 +3,8 @@ import BookItem from "./components/book/BookItem";
 import BookList from "./components/book/BookList";
 import BookDetail from "./components/book/BookDetail";
 import CartItem from "./components/cart/CartItem";
+import Cart from "./components/cart/Cart";
+import Checkout from "./components/checkout/Checkout";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -76,6 +78,38 @@ const App = () => {
         },
     ];
 
+    // Các mô tả mẫu để sử dụng
+    const descriptions = [
+        "A timeless classic that delves into the human psyche.",
+        "An exploration of society and class struggles.",
+        "A thrilling tale of adventure and discovery.",
+        "A thought-provoking story that challenges conventional wisdom.",
+        "A masterpiece of modern literature.",
+        "A poignant reflection on the complexities of life.",
+        "A gripping narrative that captivates the reader from start to finish.",
+        "An emotional journey through love, loss, and redemption.",
+        "A profound exploration of philosophical themes.",
+        "An unforgettable story of courage and resilience.",
+    ];
+
+    // Hàm tạo số lượng ngẫu nhiên từ 1 đến 100
+    function getRandomQuantity() {
+        return Math.floor(Math.random() * 100) + 1;
+    }
+
+    // Hàm tạo mô tả ngẫu nhiên từ danh sách mô tả mẫu
+    function getRandomDescription() {
+        const index = Math.floor(Math.random() * descriptions.length);
+        return descriptions[index];
+    }
+
+    // Tạo dữ liệu đa dạng cho mảng data
+    const enhancedData = data.map((item) => ({
+        ...item,
+        quantity: getRandomQuantity(),
+        description: getRandomDescription(),
+    }));
+
     const detail = {
         image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
         price: "5.9",
@@ -87,9 +121,12 @@ const App = () => {
     };
 
     //! Error Login
+    //! Sửa chổ quantity*price trong tính cart, checkout
     return (
-        <div className="text-text-normal container mx-auto cursor-default">
-            <CartItem book={detail}></CartItem>
+        <div className="text-text-normal container mx-auto cursor-default select-none">
+            {/* <Checkout books={enhancedData}></Checkout> */}
+            {/* <Cart books={enhancedData}></Cart> */}
+            {/* <CartItem book={detail}></CartItem> */}
             {/* <BookDetail book={detail}></BookDetail> */}
             {/* <BookList title="Classic" books={data}></BookList> */}
             {/* <Login></Login> */}
