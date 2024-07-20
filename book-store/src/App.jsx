@@ -5,6 +5,10 @@ import BookDetail from "./components/book/BookDetail";
 import CartItem from "./components/cart/CartItem";
 import Cart from "./components/cart/Cart";
 import Checkout from "./components/checkout/Checkout";
+import AdminNav from "./components/admin/AdminNav";
+import ManageList from "./components/admin/ManageList";
+import AdminPage from "./components/admin/AdminPage";
+import Card from "./components/elements/Card";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -19,19 +23,19 @@ const App = () => {
         {
             image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
             price: "5.9",
-            name: "Dune Frank Herbert Frank Herbert Frank Herbert",
-            author: "Frank Herbert Frank Herbert Frank Herbert Frank Herbert",
+            name: "Dune Frank ",
+            author: "Frank ",
         },
         {
             image: "https://i.pinimg.com/474x/57/70/55/5770553158ceac5870925fd79f9699eb.jpg",
             price: "7.5",
             name: "1984",
-            author: "George Orwell Frank Herbert Frank Herbert Frank Herbert",
+            author: "George Orwell",
         },
         {
             image: "https://listsach.com/wp-content/uploads/2020/05/bia-sach-dep-ngoi-nha-nghin-hanh-lang.jpg",
             price: "6.8",
-            name: "Brave New World Frank Herbert Frank Herbert Frank Herbert",
+            name: "Brave New World",
             author: "Aldous Huxley",
         },
         {
@@ -121,14 +125,22 @@ const App = () => {
     };
 
     //! Sửa chổ quantity*price trong tính cart, checkout
+
+    //! Admin: Xem lại data
     return (
-        <div className="text-text-normal container mx-auto cursor-default select-none">
+        // container mx-auto
+        <div className="text-text-normal  cursor-default select-none">
+            {/* <Card name="Sản phẩm" quantity="15" icon={faList}></Card> */}
+
+            <AdminPage books={enhancedData}></AdminPage>
+            {/* <ManageList books={enhancedData}></ManageList> */}
+            {/* <AdminNav></AdminNav> */}
             {/* <Checkout books={enhancedData}></Checkout> */}
             {/* <Cart books={enhancedData}></Cart> */}
             {/* <CartItem book={detail}></CartItem> */}
             {/* <BookDetail book={detail}></BookDetail> */}
             {/* <BookList title="Classic" books={data}></BookList> */}
-            <Login></Login>
+            {/* <Login></Login> */}
         </div>
     );
 };
