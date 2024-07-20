@@ -1,6 +1,14 @@
 import Login from "./components/login-signup/Login";
 import BookItem from "./components/book/BookItem";
 import BookList from "./components/book/BookList";
+import BookDetail from "./components/book/BookDetail";
+import CartItem from "./components/cart/CartItem";
+import Cart from "./components/cart/Cart";
+import Checkout from "./components/checkout/Checkout";
+import AdminNav from "./components/admin/AdminNav";
+import ManageList from "./components/admin/ManageList";
+import AdminPage from "./components/admin/AdminPage";
+import Card from "./components/elements/Card";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -9,25 +17,25 @@ const App = () => {
     //! Height: 0.585
 
     //* Semibold - Normal
-    //* 3xl - lg - sm - Normal
+    //* 3xl (Tiêu đề to) - lg (To hơn bình thường) - sm (Chú thích nhỏ) - Normal
 
     const data = [
         {
             image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
             price: "5.9",
-            name: "Dune Frank Herbert Frank Herbert Frank Herbert",
-            author: "Frank Herbert Frank Herbert Frank Herbert Frank Herbert",
+            name: "Dune Frank ",
+            author: "Frank ",
         },
         {
             image: "https://i.pinimg.com/474x/57/70/55/5770553158ceac5870925fd79f9699eb.jpg",
             price: "7.5",
             name: "1984",
-            author: "George Orwell Frank Herbert Frank Herbert Frank Herbert",
+            author: "George Orwell",
         },
         {
             image: "https://listsach.com/wp-content/uploads/2020/05/bia-sach-dep-ngoi-nha-nghin-hanh-lang.jpg",
             price: "6.8",
-            name: "Brave New World Frank Herbert Frank Herbert Frank Herbert",
+            name: "Brave New World",
             author: "Aldous Huxley",
         },
         {
@@ -74,9 +82,64 @@ const App = () => {
         },
     ];
 
+    // Các mô tả mẫu để sử dụng
+    const descriptions = [
+        "A timeless classic that delves into the human psyche.",
+        "An exploration of society and class struggles.",
+        "A thrilling tale of adventure and discovery.",
+        "A thought-provoking story that challenges conventional wisdom.",
+        "A masterpiece of modern literature.",
+        "A poignant reflection on the complexities of life.",
+        "A gripping narrative that captivates the reader from start to finish.",
+        "An emotional journey through love, loss, and redemption.",
+        "A profound exploration of philosophical themes.",
+        "An unforgettable story of courage and resilience.",
+    ];
+
+    // Hàm tạo số lượng ngẫu nhiên từ 1 đến 100
+    function getRandomQuantity() {
+        return Math.floor(Math.random() * 100) + 1;
+    }
+
+    // Hàm tạo mô tả ngẫu nhiên từ danh sách mô tả mẫu
+    function getRandomDescription() {
+        const index = Math.floor(Math.random() * descriptions.length);
+        return descriptions[index];
+    }
+
+    // Tạo dữ liệu đa dạng cho mảng data
+    const enhancedData = data.map((item) => ({
+        ...item,
+        quantity: getRandomQuantity(),
+        description: getRandomDescription(),
+    }));
+
+    const detail = {
+        image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
+        price: "5.9",
+        name: "Dune",
+        author: "Frank Herbert ",
+        quantity: 10,
+        description:
+            "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
+    };
+
+    //! Sửa chổ quantity*price trong tính cart, checkout
+
+    //! Admin: Xem lại data
     return (
-        <div className="text-text-normal container mx-auto">
-            <BookList title="Classic" books={data}></BookList>
+        // container mx-auto
+        <div className="text-text-normal  cursor-default select-none">
+            {/* <Card name="Sản phẩm" quantity="15" icon={faList}></Card> */}
+
+            <AdminPage books={enhancedData}></AdminPage>
+            {/* <ManageList books={enhancedData}></ManageList> */}
+            {/* <AdminNav></AdminNav> */}
+            {/* <Checkout books={enhancedData}></Checkout> */}
+            {/* <Cart books={enhancedData}></Cart> */}
+            {/* <CartItem book={detail}></CartItem> */}
+            {/* <BookDetail book={detail}></BookDetail> */}
+            {/* <BookList title="Classic" books={data}></BookList> */}
             {/* <Login></Login> */}
         </div>
     );

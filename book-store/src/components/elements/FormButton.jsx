@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const FormButton = ({
-    name,
+    name = "Button",
     main = true,
     type = "button",
     disabled = false,
@@ -14,8 +14,8 @@ const FormButton = ({
             className={`m-w-[100px] w-[100px] m-h-[40px] h-[40px] leading-[40px]
             rounded text-lg font-semibold 
             flex items-center justify-center
-            cursor-pointer
-            transition duration-150 ease-in-out
+            cursor-pointer shadow-custom
+            transition-all duration-200 ease-in-out
             bg-bgr-white
             ${main ? "bg-bgr-white" : "bg-bgr-white"}
             ${main ? "text-text-color" : "text-bgr-color"}

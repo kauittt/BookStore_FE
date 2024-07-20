@@ -23,19 +23,8 @@ const Login = () => {
             .min(6, "Must be 6 characters or more!")
             .max(15, "Must be 15 characters or less!")
             .required("Password is required!"),
-        confirmPassword:
-            purpose === "register"
-                ? Yup.string()
-                      .oneOf(
-                          [Yup.ref("password"), null],
-                          "Passwords must match"
-                      )
-                      .required("Confirm Password is required")
-                : Yup.string(),
     });
 
-    console.log(window.innerHeight);
-    console.log(window.innerWidth);
     return (
         <div className="flex w-full h-screen">
             {/*//! Image */}
@@ -48,7 +37,7 @@ const Login = () => {
             </div>
 
             {/*//! Form */}
-            <div className="w-1/2 flex flex-col items-center justify-evenly p-[20px]">
+            <div className="w-1/2 flex flex-col items-center justify-evenly p-[20px] pt-[10px]">
                 {/*//* Logo */}
                 <div className="w-[90px] h-[50px]">
                     <img
@@ -73,7 +62,6 @@ const Login = () => {
                         name: "",
                         email: "",
                         password: "",
-                        confirmPassword: "",
                     }}
                     validationSchema={validationSchema}
                     onSubmit={(values, actions) => {
@@ -111,15 +99,6 @@ const Login = () => {
                                 placeholder="Enter your password"
                                 type="password"
                             />
-                            {purpose === "register" && (
-                                <FormInput
-                                    label="Confirm Password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    placeholder="Confirm your password"
-                                    type="password"
-                                />
-                            )}
 
                             {/* Buttons */}
                             <div className="flex gap-[10px] justify-end">
