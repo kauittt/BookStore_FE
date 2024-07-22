@@ -54,7 +54,7 @@ const ManageList = (props) => {
                 className="flex justify-between items-center gap-[15px]
             font-semibold text-lg"
             >
-                {category[1].fields.map((field, index) => (
+                {category[1].fields?.map((field, index) => (
                     <p key={index} className={`${field.style} `}>
                         {field.name}
                     </p>
@@ -63,7 +63,7 @@ const ManageList = (props) => {
 
             {/*//* List Item */}
             <div className="flex flex-col max-h-full ">
-                {props.books.map((book, index) => (
+                {props.books?.map((book, index) => (
                     <ManageItem
                         data={book}
                         category={category[1].fields}

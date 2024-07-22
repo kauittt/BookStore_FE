@@ -1,6 +1,6 @@
-import BookList from "../book/BookList";
+import Cart from "../cart/Cart";
 
-const HomePage = () => {
+const CartPage = () => {
     const data = [
         {
             image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
@@ -87,26 +87,11 @@ const HomePage = () => {
             description: "An unforgettable story of courage and resilience.",
         },
     ];
-
     return (
         <div className="container mx-auto">
-            {/*//* Slider */}
-            <div className="flex flex-col justify-center items-center bg-bgr-main">
-                <div className="w-[500px]">
-                    <img
-                        className="w-full h-full object-cover"
-                        src="https://hanoibookstore.com/storage/kaixin-1.png"
-                        alt="Image Slider"
-                    />
-                </div>
-            </div>
-
-            {/*//* List Category  */}
-            <BookList full={false} books={data} title="Best Seller"></BookList>
-            <BookList full={false} books={data} title="Classics"></BookList>
-            <BookList full={false} books={data} title="Children"></BookList>
+            <Cart books={data}></Cart>
         </div>
     );
 };
 
-export default HomePage;
+export default CartPage;
