@@ -2,10 +2,32 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import FormButton from "../elements/FormButton";
-import BackNavigation from "./../elements/BackNavigation";
+import BackNavigation from "../elements/BackNavigation";
 
-const BookDetail = (props) => {
-    const book = props.book;
+const BookDetailPage = (props) => {
+    //! Xem qua cái này
+    // const handleBookClick = (book) => {
+    //     dispatch(selectBook(book));
+    //     navigate(`/book/${book.id}`);
+    // };
+
+    // const { id } = useParams();
+    // const book = useSelector((state) =>
+    //     state.books.list.find((book) => book.id === parseInt(id))
+    // );
+
+    const book = props.book
+        ? props.book
+        : {
+              image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
+              price: "5.9",
+              name: "Dune",
+              author: "Frank Herbert ",
+              quantity: 10,
+              description:
+                  "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
+          };
+
     return (
         <div className="flex flex-col gap-[30px]">
             {/*//* Direction */}
@@ -77,8 +99,8 @@ const BookDetail = (props) => {
     );
 };
 
-BookDetail.propTypes = {
+BookDetailPage.propTypes = {
     book: PropTypes.object,
 };
 
-export default BookDetail;
+export default BookDetailPage;

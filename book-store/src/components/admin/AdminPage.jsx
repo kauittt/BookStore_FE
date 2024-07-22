@@ -20,7 +20,7 @@ const AdminPage = (props) => {
     // STT | Username  | Name     | Role     | Email   | Phone | Address
     return (
         <div
-            className="flex gap-[30px] justify-between 
+            className="flex gap-[30px] justify-between h-screen
         max-h-screen overflow-hidden
         "
         >

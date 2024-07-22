@@ -1,6 +1,7 @@
+import React from "react";
 import BookList from "../book/BookList";
 
-const HomePage = () => {
+const BookPage = () => {
     const data = [
         {
             image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
@@ -90,23 +91,9 @@ const HomePage = () => {
 
     return (
         <div className="container mx-auto">
-            {/*//* Slider */}
-            <div className="flex flex-col justify-center items-center bg-bgr-main">
-                <div className="w-[500px]">
-                    <img
-                        className="w-full h-full object-cover"
-                        src="https://hanoibookstore.com/storage/kaixin-1.png"
-                        alt="Image Slider"
-                    />
-                </div>
-            </div>
-
-            {/*//* List Category  */}
-            <BookList full={false} books={data} title="Best Seller"></BookList>
-            <BookList full={false} books={data} title="Classics"></BookList>
-            <BookList full={false} books={data} title="Children"></BookList>
+            <BookList books={data} title="Classics"></BookList>
         </div>
     );
 };
 
-export default HomePage;
+export default BookPage;
