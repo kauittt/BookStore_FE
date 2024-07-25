@@ -1,19 +1,28 @@
 import PropTypes from "prop-types";
 import BookItem from "./BookItem";
+import { Link, useNavigate } from "react-router-dom";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BackNavigation from "../elements/BackNavigation";
 
 const BookList = ({ full = true, ...props }) => {
+    const navigate = useNavigate();
+
     return (
-        <div
-            className="flex flex-col gap-[20px] mt-[100px] 
-                    "
-        >
+        <div className="flex flex-col gap-[20px] ">
             {/*//* Title  */}
             <div className="flex justify-between">
-                <h2 className="font-semibold text-3xl">{props.title}</h2>
+                {full ? (
+                    <BackNavigation title={props.title}></BackNavigation>
+                ) : (
+                    <h2 className="font-semibold text-3xl">{props.title}</h2>
+                )}
+
                 {!full && (
                     <p
+                        onClick={() => navigate("/books")}
                         className="font-semibold cursor-pointer 
-                    transition-all duration-200 ease-in-out
+                    transition-base
                     text-bgr-color hover:text-bgr-color-hover "
                     >
                         View All
@@ -36,6 +45,8 @@ const BookList = ({ full = true, ...props }) => {
                                 price={book.price}
                                 name={book.name}
                                 author={book.author}
+                                //! id
+                                // id={book.id}
                             />
                         );
                     })}

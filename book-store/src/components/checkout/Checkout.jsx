@@ -5,8 +5,15 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import CheckoutItem from "./CheckoutItem";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Checkout = (props) => {
+    const notify = () =>
+        toast("Wow so easy!", {
+            style: { color: "#090937", fontWeight: 600 },
+        });
+
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
@@ -23,9 +30,6 @@ const Checkout = (props) => {
             .min(4, "Must be 6 characters or more!")
             .max(15, "Must be 15 characters or less!")
             .required("Name is required!"),
-        email: Yup.string()
-            .email("Invalid email address!")
-            .required("Email is required!"),
         phone: Yup.string()
             .matches(/^[0-9]{10}$/, "Must be exactly 10 digits!")
             .required("Phone is required!"),
@@ -38,15 +42,17 @@ const Checkout = (props) => {
     //! Get data from User
     const initialValues = {
         name: "Minh",
-        email: "",
-        phone: "",
-        address: "",
+        phone: "0937230092",
+        address: "Bao Vinh Long Khanh",
     };
 
     return (
-        <div className="flex max-w-full w-full h-screen pt-[50px] overflow-hidden">
+        <div className="flex max-w-full w-full  overflow-hidden">
             {/*//! Form */}
-            <div className="w-1/2 flex flex-col items-center justify-start p-[20px]">
+            <div
+                className="flex flex-col items-center justify-start gap-[50px]
+            w-1/2  "
+            >
                 {/*//* Greeting */}
                 <div className="flex flex-col w-[400px]">
                     <h1 className="font-semibold text-3xl ">
@@ -66,25 +72,18 @@ const Checkout = (props) => {
                             actions.setSubmitting(false);
                         }, 500);
 
+                        notify();
                         console.log("API HERE");
                         // Handle form submission
                     }}
                 >
                     {({ isSubmitting }) => (
-                        <Form className="flex flex-col gap-[20px]">
+                        <Form className="flex flex-col gap-[10px] relative">
                             <FormInput
                                 label="Full name"
                                 id="name"
                                 name="name"
                                 placeholder="Enter your name"
-                            />
-
-                            <FormInput
-                                label="E-mail"
-                                id="email"
-                                name="email"
-                                placeholder="Enter your email"
-                                type="email"
                             />
 
                             <FormInput
@@ -102,7 +101,7 @@ const Checkout = (props) => {
                             />
 
                             {/*//* Buttons */}
-                            <div className="flex gap-[10px] justify-end ">
+                            <div className="flex gap-[10px] justify-end">
                                 <FormButton
                                     name={"Checkout"}
                                     type="submit"
@@ -110,6 +109,7 @@ const Checkout = (props) => {
                                     main={false}
                                 />
                             </div>
+                            <ToastContainer />
                         </Form>
                     )}
                 </Formik>
@@ -117,12 +117,12 @@ const Checkout = (props) => {
 
             {/*//! Information */}
             <div
-                className="w-1/2  flex flex-col items-center justify-start p-[20px]
+                className="w-1/2  flex flex-col items-center justify-start 
             border-l  border-border"
             >
                 {/* //* Books Wrapper */}
                 <div
-                    className="flex flex-col gap-[10px] 
+                    className="flex flex-col gap-[30px] 
                 "
                 >
                     <p className="font-semibold text-3xl">Books</p>
@@ -147,17 +147,9 @@ const Checkout = (props) => {
                 border-t  border-border"
                 >
                     <div
-                        className="flex flex-col gap-[20px] items-end
+                        className="flex  gap-[20px] items-end
                         font-semibold"
                     >
-                        {/*//* Shipping fee  */}
-                        <p className="">
-                            {"Shipping fee: "}
-                            <span className="text-2xl text-text-color">
-                                {shippingFee}$
-                            </span>
-                        </p>
-
                         {/*//* Total  */}
                         <p className="">
                             {"Total: "}

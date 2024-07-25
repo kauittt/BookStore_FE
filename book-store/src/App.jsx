@@ -12,6 +12,9 @@ const App = () => {
 
     //! Sửa chổ quantity*price trong tính cart, checkout
     //! Admin: Xem lại data
+
+    //? Cần hoàn thành:
+    //* UserPage, CheckoutPage
     return (
         <Router>
             <AnimateRoute></AnimateRoute>

@@ -17,12 +17,10 @@ const FormButton = ({
             cursor-pointer shadow-custom
             transition-all duration-200 ease-in-out
             bg-bgr-white
-            ${main ? "bg-bgr-white" : "bg-bgr-white"}
-            ${main ? "text-text-color" : "text-bgr-color"}
             ${
                 main
-                    ? "border border-text-color hover:bg-text-color hover:text-text-white"
-                    : "border border-bgr-color hover:bg-bgr-color hover:text-text-white"
+                    ? "hover-main border border-text-color"
+                    : "hover-sub border border-bgr-color"
             }
             `}
             {...props}

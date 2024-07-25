@@ -29,7 +29,7 @@ const BookDetailPage = (props) => {
           };
 
     return (
-        <div className="flex flex-col gap-[30px]">
+        <div className="flex flex-col gap-[30px] container mx-auto">
             {/*//* Direction */}
             <BackNavigation title={"Book Details"}></BackNavigation>
 
@@ -37,7 +37,7 @@ const BookDetailPage = (props) => {
             <div className="flex gap-[50px] ">
                 {/*//* Image */}
                 <div
-                    className="flex justify-center items-center bg-bgr-main 
+                    className="flex flex-center bg-bgr-main 
                     shadow-custom rounded
                 min-w-[350px] max-w-[350px] h-[470px]"
                 >
@@ -66,9 +66,8 @@ const BookDetailPage = (props) => {
                         {/*//* Cart  */}
                         <FontAwesomeIcon
                             className="p-[15px] rounded-[50%] text-xl cursor-pointer shadow-custom
-                                transition-all duration-200 ease-in-out
-                            bg-bgr-main text-text-color
-                            hover:bg-text-color hover:text-text-white"
+                                transition-base
+                            bg-bgr-main hover-main"
                             icon={faCartShopping}
                         />
                     </div>

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import CartItem from "./CartItem";
 import FormButton from "../elements/FormButton";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Cart = (props) => {
     const [totalPrice, setTotalPrice] = useState(0);
@@ -24,22 +25,34 @@ const Cart = (props) => {
         console.log("Handle remove: Line24 - Cart.jsx");
     };
 
+    const navigate = useNavigate();
+
+    // border-t border-b border-border
+
     return (
         <div className="">
             {/*//* Title  */}
             <div
-                className="flex items-center justify-between
-                border-t border-b border-border
-                text-center
-                p-[10px] gap-[5px]
-                font-semibold"
+                className="flex items-center justify-between gap-[5px]
+                text-center h-[60px]  p-[10px] bg-bgr-main font-semibold
+                rounded"
             >
-                <p className="w-[128px]">Image</p>
-                <p className="w-[700px]">Name</p>
-                <p className="w-[125px]">Price</p>
-                <p className="w-[128px]">Quantity</p>
-                <p className="w-[125px]">Total</p>
-                <p className="w-[50px]">Remove</p>
+                <p className="w-[80px] text-center">Image</p>
+
+                <div className="bg-border w-px h-full"></div>
+                <p className="flex-1 text-center">Name</p>
+
+                <div className="bg-border w-px h-full"></div>
+                <p className="w-[100px] text-center">Price</p>
+
+                <div className="bg-border w-px h-full"></div>
+                <p className="w-[128px] text-center">Quantity</p>
+
+                <div className="bg-border w-px h-full"></div>
+                <p className="w-[100px] text-center">Total</p>
+
+                <div className="bg-border w-px h-full"></div>
+                <p className="w-[65px]">Remove</p>
             </div>
 
             {/*//* Cart Items */}
@@ -54,6 +67,7 @@ const Cart = (props) => {
                 ))}
             </div>
 
+            {/*//* Money - Button  */}
             <div
                 className="flex flex-col items-end justify-center gap-[10px]
                 mt-[20px]"
@@ -64,7 +78,13 @@ const Cart = (props) => {
                         {totalPrice.toFixed(2)}$
                     </span>
                 </p>
-                <FormButton name={"Checkout"}></FormButton>
+
+                <FormButton
+                    onClick={() => {
+                        navigate("/checkout");
+                    }}
+                    name={"Checkout"}
+                ></FormButton>
             </div>
         </div>
     );

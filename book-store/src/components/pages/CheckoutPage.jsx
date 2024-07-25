@@ -1,6 +1,7 @@
-import Cart from "../cart/Cart";
+import React from "react";
+import Checkout from "../checkout/Checkout";
 
-const CartPage = () => {
+const CheckoutPage = () => {
     const data = [
         {
             image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
@@ -88,10 +89,10 @@ const CartPage = () => {
         },
     ];
     return (
-        <div className="container mx-auto pb-[50px]">
-            <Cart books={data}></Cart>
+        <div>
+            <Checkout books={data}></Checkout>
         </div>
     );
 };
 
-export default CartPage;
+export default CheckoutPage;

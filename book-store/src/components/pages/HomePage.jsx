@@ -89,12 +89,15 @@ const HomePage = () => {
     ];
 
     return (
-        <div className="container mx-auto">
+        <div
+            className="container mx-auto pb-[50px]
+        flex flex-col gap-[100px]"
+        >
             {/*//* Slider */}
-            <div className="flex flex-col justify-center items-center bg-bgr-main">
-                <div className="w-[500px]">
+            <div className="flex flex-col flex-center bg-bgr-main shadow-custom rounded">
+                <div className="w-[500px] ">
                     <img
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-xl"
                         src="https://hanoibookstore.com/storage/kaixin-1.png"
                         alt="Image Slider"
                     />
@@ -102,9 +105,15 @@ const HomePage = () => {
             </div>
 
             {/*//* List Category  */}
-            <BookList full={false} books={data} title="Best Seller"></BookList>
-            <BookList full={false} books={data} title="Classics"></BookList>
-            <BookList full={false} books={data} title="Children"></BookList>
+            <div className="flex flex-col gap-[60px]">
+                <BookList
+                    full={false}
+                    books={data}
+                    title="Best Seller"
+                ></BookList>
+                <BookList full={false} books={data} title="Classics"></BookList>
+                <BookList full={false} books={data} title="Children"></BookList>
+            </div>
         </div>
     );
 };
