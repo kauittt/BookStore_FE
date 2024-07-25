@@ -4,9 +4,12 @@ import {
     faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
+    const [isHovering, setIsHovering] = useState(false);
+
     return (
         <nav className="bg-bgr-main mb-[30px]">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -44,6 +47,7 @@ const Nav = () => {
                     w-full md:flex md:w-auto md:order-2"
                     id="navbar-search"
                 >
+                    {/*//* Cart icon  */}
                     <Link to="/cart">
                         <FontAwesomeIcon
                             className="p-[15px] 
@@ -53,14 +57,59 @@ const Nav = () => {
                         ></FontAwesomeIcon>
                     </Link>
 
-                    <Link to="/user">
+                    {/*//* User icon */}
+                    <div
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
+                        className="relative"
+                    >
+                        <Link to="/user">
+                            <FontAwesomeIcon
+                                className=" p-[15px] text-text-color transition-base"
+                                icon={faUser}
+                            ></FontAwesomeIcon>
+                        </Link>
+                        {isHovering && (
+                            <div
+                                className="flex flex-col items-end justify-center gap-[10px]
+                               w-[110px] p-[10px]
+                                absolute top-[55px] right-0
+                                bg-bgr-white shadow-custom rounded-lg
+                            text-base text-right"
+                            >
+                                <Link
+                                    to="/user"
+                                    className="w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
+                                    transition-base"
+                                >
+                                    Info
+                                </Link>
+                                <Link
+                                    to="/admin"
+                                    className=" w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
+                                    transition-base"
+                                >
+                                    Admin
+                                </Link>
+                                <Link
+                                    to="/login"
+                                    className=" w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
+                                    transition-base"
+                                >
+                                    Sign out
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* <Link to="/user">
                         <FontAwesomeIcon
                             className="p-[15px] 
                             hover-main
                             transition-base"
                             icon={faUser}
                         ></FontAwesomeIcon>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </nav>

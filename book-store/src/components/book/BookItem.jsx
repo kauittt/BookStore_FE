@@ -51,27 +51,25 @@ const BookItem = (props) => {
                             className="text-text-white text-2xl mx-2 p-[10px]  rounded
                         hover:bg-text-color transition-opacity duration-200 ease-in-out
                         shadow-custom"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(temp);
+                            }}
                         >
-                            <FontAwesomeIcon
-                                icon={faMagnifyingGlass}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    navigate(temp);
-                                }}
-                            />
+                            <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </span>
                         <span
                             className="text-text-white text-2xl mx-2 rounded p-[10px]
                         hover:bg-text-color transition-opacity duration-200 ease-in-out
                         shadow-custom"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate("/cart");
+                            }}
                         >
                             <FontAwesomeIcon
                                 icon={faCartShopping}
                                 //! Tạm thời là navigate("/cart"), cần handle để add item to cart
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    navigate("/cart");
-                                }}
                             />
                         </span>
                     </div>

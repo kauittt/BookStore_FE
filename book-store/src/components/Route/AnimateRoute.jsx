@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import MainPage from "../pages/MainPage";
 import HomePage from "../pages/HomePage";
@@ -7,6 +7,7 @@ import BookDetailPage from "./../pages/BookDetailPage";
 import BookPage from "../pages/BookPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import AdminPage from "../pages/AdminPage";
+import UserPage from "../pages/UserPage";
 
 const AnimateRoute = () => {
     return (
@@ -15,6 +16,7 @@ const AnimateRoute = () => {
 
             <Route path="/admin" element={<AdminPage />} />
 
+            <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/" element={<MainPage />}>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/books" element={<BookPage />} />
@@ -22,6 +24,7 @@ const AnimateRoute = () => {
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route path="/user" element={<UserPage />} />
             </Route>
 
             <Route

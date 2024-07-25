@@ -10,7 +10,7 @@ import {
     faList,
 } from "@fortawesome/free-solid-svg-icons";
 
-const AdminPage = (props) => {
+const AdminPage = () => {
     //! Card: quantity, CRUD -> update Card
     //! ManageTitle: name, button
     //! ManageList: books (xem lại data - redux)

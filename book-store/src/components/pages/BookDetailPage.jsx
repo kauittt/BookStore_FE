@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import FormButton from "../elements/FormButton";
 import BackNavigation from "../elements/BackNavigation";
+import { useNavigate } from "react-router-dom";
 
 const BookDetailPage = (props) => {
     //! Xem qua cái này
@@ -27,6 +28,8 @@ const BookDetailPage = (props) => {
               description:
                   "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
           };
+
+    const navigate = useNavigate();
 
     return (
         <div className="flex flex-col gap-[30px] container mx-auto">
@@ -69,6 +72,7 @@ const BookDetailPage = (props) => {
                                 transition-base
                             bg-bgr-main hover-main"
                             icon={faCartShopping}
+                            onClick={() => navigate("/cart")}
                         />
                     </div>
 
@@ -90,7 +94,11 @@ const BookDetailPage = (props) => {
 
                     {/*//* Button  */}
                     <div className="flex justify-end">
-                        <FormButton main={false} name="Buy now"></FormButton>
+                        <FormButton
+                            main={false}
+                            name="Buy now"
+                            onClick={() => navigate("/checkout")}
+                        ></FormButton>
                     </div>
                 </div>
             </div>
