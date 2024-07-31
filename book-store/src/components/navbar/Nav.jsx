@@ -10,6 +10,12 @@ import { Link } from "react-router-dom";
 const Nav = () => {
     const [isHovering, setIsHovering] = useState(false);
 
+    const logout = () => {
+        // Xóa accessToken và refreshToken từ localStorage
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+    };
+
     return (
         <nav className="bg-bgr-main mb-[30px]">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -95,6 +101,7 @@ const Nav = () => {
                                     to="/login"
                                     className=" w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
                                     transition-base"
+                                    onClick={logout}
                                 >
                                     Sign out
                                 </Link>

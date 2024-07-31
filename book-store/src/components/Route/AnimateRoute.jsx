@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../pages/Login";
 import MainPage from "../pages/MainPage";
 import HomePage from "../pages/HomePage";
 import CartPage from "../pages/CartPage";
@@ -8,11 +7,12 @@ import BookPage from "../pages/BookPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import AdminPage from "../pages/AdminPage";
 import UserPage from "../pages/UserPage";
+import LoginPage from "../pages/LoginPage";
 
 const AnimateRoute = () => {
     return (
         <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginPage />} />
 
             <Route path="/admin" element={<AdminPage />} />
 
