@@ -1,10 +1,83 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import FormInput from "./../elements/FormInput";
 import FormButton from "./../elements/FormButton";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/Reducer/userSlice";
+import { updateUser } from "../../redux/Action/userAction";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserPage = () => {
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    console.log(user);
+
+    const handleError = (error) => {
+        let message = "An unexpected error occurred. Please try again.";
+
+        if (error.code) {
+            switch (error.code) {
+                case "ERR_BAD_REQUEST":
+                    message =
+                        purpose == "login"
+                            ? "Incorrect username or password."
+                            : "Username may already be in use.";
+                    break;
+                case "ERR_NETWORK":
+                    message =
+                        "Service temporarily unavailable. Please try again later.";
+                    break;
+                default:
+                    message =
+                        "An unexpected error occurred with code: " + error.code;
+                    break;
+            }
+        } else if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    message = "Unauthorized. Please login again.";
+                    break;
+                case 404:
+                    message = "Requested resource not found.";
+                    break;
+                case 500:
+                    message = "Internal server error. Please try again later.";
+                    break;
+                default:
+                    message = error.response.data.message || message;
+                    break;
+            }
+        }
+
+        return message;
+    };
+
+    const doUpdate = (user) => {
+        try {
+            dispatch(updateUser(user));
+            toast.info("User updated successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } catch (error) {
+            toast.error(handleError(error), {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    };
+
     // Validation schema
     const validationSchema = Yup.object({
         name: Yup.string()
@@ -38,17 +111,19 @@ const UserPage = () => {
             <h1 className="font-semibold text-3xl mb-4">User Details</h1>
             <Formik
                 initialValues={{
-                    name: "",
-                    email: "",
-                    username: "",
-                    password: "",
-                    phone: "",
-                    address: "",
+                    name: user.name,
+                    email: user.email,
+                    username: user.username,
+                    password: "******",
+                    phone: user.phone,
+                    address: user.address,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, actions) => {
+                    const updateData = { ...user, ...values };
+                    doUpdate(updateData);
+
                     setTimeout(() => {
-                        console.log("Form submitted with values:", values);
                         actions.setSubmitting(false);
                     }, 500);
                 }}
@@ -75,13 +150,15 @@ const UserPage = () => {
                                 name="username"
                                 placeholder="Enter your username"
                             />
-                            <FormInput
-                                label="Password"
-                                id="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                type="password"
-                            />
+                            <div className="pointer-events-none">
+                                <FormInput
+                                    label="Password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    type="password"
+                                />
+                            </div>
                             <FormInput
                                 label="Phone"
                                 id="phone"
@@ -102,6 +179,7 @@ const UserPage = () => {
                                 type="submit"
                                 disabled={isSubmitting}
                             />
+                            <ToastContainer />
                         </div>
                     </Form>
                 )}

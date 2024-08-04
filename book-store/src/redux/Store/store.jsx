@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AuthSlice from "../Reducer/AuthSlice";
+import userSlice from "../Reducer/userSlice";
 
 const store = configureStore({
     reducer: {
         // Đặt các reducer khác ở đây nếu cần
+        user: userSlice,
     },
     // Thêm middleware khác nếu cần
 

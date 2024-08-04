@@ -1,4 +1,6 @@
 import BookList from "../book/BookList";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/Reducer/userSlice";
 
 const HomePage = () => {
     const data = [
@@ -87,6 +89,15 @@ const HomePage = () => {
             description: "An unforgettable story of courage and resilience.",
         },
     ];
+    const user = useSelector(selectUser);
+
+    //! Just for console.log
+    console.log("User data:", user); // Log user data when it changes
+    // useEffect(() => {
+    //     if (user) {
+    //         console.log("User data:", user); // Log user data when it changes
+    //     }
+    // }, [user]);
 
     return (
         <div

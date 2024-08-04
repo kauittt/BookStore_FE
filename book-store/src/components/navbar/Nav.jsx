@@ -6,14 +6,19 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { userLogout } from "../../redux/Reducer/userSlice";
+import { useDispatch } from "react-redux";
 
 const Nav = () => {
     const [isHovering, setIsHovering] = useState(false);
+    const dispatch = useDispatch();
 
     const logout = () => {
         // Xóa accessToken và refreshToken từ localStorage
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user");
+        dispatch(userLogout());
     };
 
     return (

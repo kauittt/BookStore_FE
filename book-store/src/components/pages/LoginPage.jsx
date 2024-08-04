@@ -7,10 +7,18 @@ import LoginService from "../../services/LoginService";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo } from "../../redux/Action/userAction";
+import { selectUser } from "../../redux/Reducer/userSlice";
 
 const LoginPage = () => {
     const [purpose, setPurpose] = useState("login");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    //! Just for console.log
+    const user = useSelector(selectUser);
+    console.log("User data:", user); // Log user data when it changes
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
@@ -90,9 +98,9 @@ const LoginPage = () => {
                     "refreshToken",
                     JSON.stringify(response.data.refreshToken)
                 );
-                localStorage.setItem(
-                    "username",
-                    JSON.stringify(credentials.username)
+
+                dispatch(
+                    getUserInfo(credentials.username, response.data.accessToken)
                 );
                 navigate("/home");
             }
@@ -186,9 +194,7 @@ const LoginPage = () => {
                             doRegister(values);
                         }
                         setTimeout(() => {
-                            console.log("Form submitted with values:", values);
-
-                            // actions.resetForm();
+                            actions.resetForm();
                             actions.setSubmitting(false);
                         }, 500);
                     }}
