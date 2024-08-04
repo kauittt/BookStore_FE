@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import FormButton from "../elements/FormButton";
 import BackNavigation from "../elements/BackNavigation";
+import { useNavigate } from "react-router-dom";
 
 const BookDetailPage = (props) => {
     //! Xem qua cái này
@@ -28,8 +29,10 @@ const BookDetailPage = (props) => {
                   "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
           };
 
+    const navigate = useNavigate();
+
     return (
-        <div className="flex flex-col gap-[30px]">
+        <div className="flex flex-col gap-[30px] container mx-auto">
             {/*//* Direction */}
             <BackNavigation title={"Book Details"}></BackNavigation>
 
@@ -37,7 +40,7 @@ const BookDetailPage = (props) => {
             <div className="flex gap-[50px] ">
                 {/*//* Image */}
                 <div
-                    className="flex justify-center items-center bg-bgr-main 
+                    className="flex flex-center bg-bgr-main 
                     shadow-custom rounded
                 min-w-[350px] max-w-[350px] h-[470px]"
                 >
@@ -66,10 +69,10 @@ const BookDetailPage = (props) => {
                         {/*//* Cart  */}
                         <FontAwesomeIcon
                             className="p-[15px] rounded-[50%] text-xl cursor-pointer shadow-custom
-                                transition-all duration-200 ease-in-out
-                            bg-bgr-main text-text-color
-                            hover:bg-text-color hover:text-text-white"
+                                transition-base
+                            bg-bgr-main hover-main"
                             icon={faCartShopping}
+                            onClick={() => navigate("/cart")}
                         />
                     </div>
 
@@ -91,7 +94,11 @@ const BookDetailPage = (props) => {
 
                     {/*//* Button  */}
                     <div className="flex justify-end">
-                        <FormButton main={false} name="Buy now"></FormButton>
+                        <FormButton
+                            main={false}
+                            name="Buy now"
+                            onClick={() => navigate("/checkout")}
+                        ></FormButton>
                     </div>
                 </div>
             </div>

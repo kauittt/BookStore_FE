@@ -4,11 +4,16 @@ import {
     faMagnifyingGlass,
     faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const BookItem = (props) => {
+    const navigate = useNavigate();
+    const id = props.id ? props.id : 1;
+    const temp = "/books/" + id;
     //* 67
     return (
         <div
+            onClick={() => navigate(temp)}
             className="group m-w-[300px] w-[300px] h-[400px] m-h-[400px] bg-bgr-main  rounded p-[20px]
                         overflow-hidden
                         shadow-custom
@@ -27,7 +32,7 @@ const BookItem = (props) => {
                     <img
                         className="w-full h-full object-cover rounded 
                     shadow-custom
-                    transition-all duration-200 ease-in-out 
+                    transition-base
                     overflow-hidden
                     group-hover:scale-110 "
                         src={props.image}
@@ -46,6 +51,10 @@ const BookItem = (props) => {
                             className="text-text-white text-2xl mx-2 p-[10px]  rounded
                         hover:bg-text-color transition-opacity duration-200 ease-in-out
                         shadow-custom"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(temp);
+                            }}
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </span>
@@ -53,8 +62,15 @@ const BookItem = (props) => {
                             className="text-text-white text-2xl mx-2 rounded p-[10px]
                         hover:bg-text-color transition-opacity duration-200 ease-in-out
                         shadow-custom"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate("/cart");
+                            }}
                         >
-                            <FontAwesomeIcon icon={faCartShopping} />
+                            <FontAwesomeIcon
+                                icon={faCartShopping}
+                                //! Tạm thời là navigate("/cart"), cần handle để add item to cart
+                            />
                         </span>
                     </div>
                 </div>
@@ -76,6 +92,7 @@ const BookItem = (props) => {
     );
 };
 BookItem.propTypes = {
+    id: PropTypes.string,
     image: PropTypes.string,
     price: PropTypes.string,
     name: PropTypes.string,

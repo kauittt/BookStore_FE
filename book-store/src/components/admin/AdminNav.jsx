@@ -6,8 +6,10 @@ import {
     faBook,
     faGauge,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const AdminNav = () => {
+    const navigate = useNavigate();
     return (
         <div
             className="flex flex-col  gap-[100px]  
@@ -16,12 +18,13 @@ const AdminNav = () => {
         >
             <div
                 className="w-full flex justify-center mt-[50px] pb-[50px]
-            border-b border-border"
+            border-b border-border cursor-pointer"
             >
                 <img
                     src="./image/Logo.png"
                     alt="Logo"
                     className="w-[90px] h-[50px]  object-cover"
+                    onClick={() => navigate("/home")}
                 />
             </div>
 

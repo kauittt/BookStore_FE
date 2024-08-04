@@ -1,124 +1,127 @@
 import {
-    faCircleUser,
+    faUser,
     faCartShopping,
+    faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { userLogout } from "../../redux/Reducer/userSlice";
+import { useDispatch } from "react-redux";
 
 const Nav = () => {
+    const [isHovering, setIsHovering] = useState(false);
+    const dispatch = useDispatch();
+
+    const logout = () => {
+        // Xóa accessToken và refreshToken từ localStorage
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user");
+        dispatch(userLogout());
+    };
+
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="bg-bgr-main mb-[30px]">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 {/*//* Logo  */}
-                <a
-                    href="https://flowbite.com/"
+                <Link
+                    to="/home"
                     className="flex items-center space-x-3 rtl:space-x-reverse"
                 >
                     <img src="/image/Logo.png" className="h-8" alt="Logo" />
-                </a>
+                </Link>
 
                 {/*//* Search  */}
-                <div className="flex md:order-1">
-                    <button
-                        type="button"
-                        data-collapse-toggle="navbar-search"
-                        aria-controls="navbar-search"
-                        aria-expanded="false"
-                        className="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1"
-                    >
-                        <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                            />
-                        </svg>
-                        <span className="sr-only">Search</span>
-                    </button>
-                    <div className="relative hidden md:block">
+                <div className="flex md:order-1 cursor-pointer w-[400px]">
+                    <div className="relative md:block w-full">
                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg
-                                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                                aria-hidden="true"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                                />
-                            </svg>
-                            <span className="sr-only">Search icon</span>
+                            <FontAwesomeIcon
+                                icon={faMagnifyingGlass}
+                            ></FontAwesomeIcon>
                         </div>
                         <input
                             type="text"
                             id="search-navbar"
-                            className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="w-ful block w-full h-[50px] p-2 ps-10 text-sm  rounded-lg 
+                            text-gray-900 bg-gray-50
+                            shadow-custom focus:outline-none focus:ring-2 focus:ring-text-color focus:border-none"
                             placeholder="Search..."
                         />
                     </div>
-                    <button
-                        data-collapse-toggle="navbar-search"
-                        type="button"
-                        className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        aria-controls="navbar-search"
-                        aria-expanded="false"
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            fill="none"
-                            viewBox="0 0 17 14"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M1 1h15M1 7h15M1 13h15"
-                            />
-                        </svg>
-                    </button>
                 </div>
 
                 {/*//* Icon  */}
                 <div
-                    className="items-center justify-between hidden w-full md:flex md:w-auto md:order-2"
+                    className="flex items-center justify-between gap-[10px]
+                    text-xl 
+                    w-full md:flex md:w-auto md:order-2"
                     id="navbar-search"
                 >
-                    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                                aria-current="page"
+                    {/*//* Cart icon  */}
+                    <Link to="/cart">
+                        <FontAwesomeIcon
+                            className="p-[15px] 
+                            hover-main
+                            transition-base"
+                            icon={faCartShopping}
+                        ></FontAwesomeIcon>
+                    </Link>
+
+                    {/*//* User icon */}
+                    <div
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
+                        className="relative"
+                    >
+                        <Link to="/user">
+                            <FontAwesomeIcon
+                                className=" p-[15px] text-text-color transition-base"
+                                icon={faUser}
+                            ></FontAwesomeIcon>
+                        </Link>
+                        {isHovering && (
+                            <div
+                                className="flex flex-col items-end justify-center gap-[10px]
+                               w-[110px] p-[10px]
+                                absolute top-[55px] right-0
+                                bg-bgr-white shadow-custom rounded-lg
+                            text-base text-right"
                             >
-                                <FontAwesomeIcon
-                                    icon={faCartShopping}
-                                ></FontAwesomeIcon>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faCircleUser}
-                                ></FontAwesomeIcon>
-                            </a>
-                        </li>
-                    </ul>
+                                <Link
+                                    to="/user"
+                                    className="w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
+                                    transition-base"
+                                >
+                                    Info
+                                </Link>
+                                <Link
+                                    to="/admin"
+                                    className=" w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
+                                    transition-base"
+                                >
+                                    Admin
+                                </Link>
+                                <Link
+                                    to="/login"
+                                    className=" w-full p-[5px] rounded hover:bg-bgr-main hover:shadow-custom
+                                    transition-base"
+                                    onClick={logout}
+                                >
+                                    Sign out
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* <Link to="/user">
+                        <FontAwesomeIcon
+                            className="p-[15px] 
+                            hover-main
+                            transition-base"
+                            icon={faUser}
+                        ></FontAwesomeIcon>
+                    </Link> */}
                 </div>
             </div>
         </nav>

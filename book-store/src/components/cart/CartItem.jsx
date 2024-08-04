@@ -34,9 +34,9 @@ const CartItem = (props) => {
             "
         >
             {/*//* Image  */}
-            <div className="w-[128px] h-full">
+            <div className="flex flex-center w-[80px] h-full">
                 <img
-                    className="w-full h-full object-cover"
+                    className="w-[60px] h-full object-cover"
                     src={book.image}
                     alt="Image"
                 />
@@ -46,18 +46,13 @@ const CartItem = (props) => {
             <div className="bg-border w-px h-full"></div>
 
             {/*//*  Name */}
-            <p
-                className="text-lg font-semibold flex-1
-                w-[700px] "
-            >
-                {name}
-            </p>
+            <p className="text-lg flex-1">{name}</p>
 
             {/* Vertical Divider */}
             <div className="bg-border w-px h-full"></div>
 
             {/*//* Price  */}
-            <p className="w-[125px]  ">{book.price}$</p>
+            <p className="w-[100px]  ">{book.price}$</p>
 
             {/* Vertical Divider */}
             <div className="bg-border w-px h-full"></div>
@@ -75,14 +70,14 @@ const CartItem = (props) => {
             <div className="bg-border w-px h-full"></div>
 
             {/*//* Total Price  */}
-            <p className="w-[125px] ">{calculateTotal()}$</p>
+            <p className="w-[100px] ">{calculateTotal()}$</p>
 
             {/* Vertical Divider */}
             <div className="bg-border w-px h-full"></div>
 
             {/*//* Trash Icon  */}
             <FontAwesomeIcon
-                className=" p-[16.25px]
+                className=" p-[23.75px]
                 text-xl hover:text-text-error 
                 transition-all duration-200 ease-in-out cursor-pointer"
                 icon={faTrash}

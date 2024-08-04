@@ -88,7 +88,7 @@ const CartPage = () => {
         },
     ];
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto pb-[50px]">
             <Cart books={data}></Cart>
         </div>
     );

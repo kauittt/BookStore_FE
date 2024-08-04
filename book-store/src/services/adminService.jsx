@@ -1,26 +1,26 @@
+// Coffee_Management/client_side/src/services/adminService.jsx
 import axios from "axios";
 
-// const { accessToken } = JSON.parse(localStorage.getItem("user"));
-
+// Get the accessToken from the user item in local storage
 let accessToken = null;
 
 const user = localStorage.getItem("user");
 if (user) {
-  try {
-    const parsedUser = JSON.parse(user);
-    if (parsedUser && parsedUser.accessToken) {
-      accessToken = parsedUser.accessToken;
+    try {
+        const parsedUser = JSON.parse(user);
+        if (parsedUser && parsedUser.accessToken) {
+            accessToken = parsedUser.accessToken;
+        }
+    } catch (error) {
+        console.error("Error parsing user from local storage:", error);
     }
-  } catch (error) {
-    console.error("Error parsing user from local storage:", error);
-  }
 }
 
-const ingredientService = {
-    getAll: () => {
+const adminService = {
+    getAllShopsAsAdmin: () => {
         return axios
             .create({
-                baseURL: "http://localhost:5146/",
+                baseURL: "http://localhost:8080/",
                 timeout: 5000,
                 headers: {
                     "Content-Type": "application/json",
@@ -29,13 +29,13 @@ const ingredientService = {
                     "Access-Control-Allow-Origin": "https://localhost:5173",
                     "Access-Control-Allow-Methods":
                         "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`, // pass token vào đây nè !!
                     Accept: "application/x-www-form-urlencoded, text/plain",
                 },
             })
-            .get("api/Ingredients");
+            .get("api/Admin/ShopsListAdmin");
     },
-    addIngredient: (ingredientData) => {
+    approveShop: (shopId) => {
         return axios
             .create({
                 baseURL: "http://localhost:5146/",
@@ -47,13 +47,13 @@ const ingredientService = {
                     "Access-Control-Allow-Origin": "https://localhost:5173",
                     "Access-Control-Allow-Methods":
                         "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`, // pass token vào đây nè !!
                     Accept: "application/x-www-form-urlencoded, text/plain",
                 },
             })
-            .post("api/Ingredients", ingredientData);
+            .get(`api/Admin/ApproveShop?shopId=${shopId}`);
     },
-    updateIngredient: (id, ingredientData) => {
+    suspenseShop: (shopId) => {
         return axios
             .create({
                 baseURL: "http://localhost:5146/",
@@ -65,29 +65,12 @@ const ingredientService = {
                     "Access-Control-Allow-Origin": "https://localhost:5173",
                     "Access-Control-Allow-Methods":
                         "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`, // pass token vào đây nè !!
                     Accept: "application/x-www-form-urlencoded, text/plain",
                 },
             })
-            .put(`api/Ingredients/${id}`, ingredientData);
-    },
-    deleteIngredient: (id) => {
-        return axios
-            .create({
-                baseURL: "http://localhost:5146/",
-                timeout: 5000,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Headers":
-                        "Origin, X-Requested-With, Content-Type, Accept",
-                    "Access-Control-Allow-Origin": "https://localhost:5173",
-                    "Access-Control-Allow-Methods":
-                        "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-                    Authorization: `Bearer ${accessToken}`,
-                    Accept: "application/x-www-form-urlencoded, text/plain",
-                },
-            })
-            .delete(`api/Ingredients/${id}`);
+            .get(`api/Admin/SuspenseShop?shopId=${shopId}`);
     },
 };
-export default ingredientService;
+
+export default adminService;

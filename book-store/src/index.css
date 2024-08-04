@@ -1,11 +1,28 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
     scrollbar-width: thin;
 }
 
-@tailwind components;
-@tailwind utilities;
+@layer components {
+    .transition-base {
+        @apply transition-all duration-200 ease-in-out;
+    }
+
+    .hover-main {
+        @apply text-text-color hover:text-text-white hover:bg-text-color rounded;
+    }
+
+    .hover-sub {
+        @apply text-bgr-color hover:text-text-white hover:bg-bgr-color rounded;
+    }
+
+    .flex-center {
+        @apply justify-center items-center;
+    }
+}
 
 .container {
     width: 100%;

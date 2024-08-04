@@ -1,5 +1,8 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import AnimateRoute from "./components/Route/AnimateRoute";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getUserSuccess } from "./redux/Reducer/userSlice";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -12,6 +15,19 @@ const App = () => {
 
     //! Sửa chổ quantity*price trong tính cart, checkout
     //! Admin: Xem lại data
+
+    //? Cần hoàn thành:
+    //* UserPage, CheckoutPage
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            dispatch(getUserSuccess(user));
+        }
+    }, [dispatch]);
+
     return (
         <Router>
             <AnimateRoute></AnimateRoute>
