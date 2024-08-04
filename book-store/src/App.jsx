@@ -3,6 +3,7 @@ import AnimateRoute from "./components/Route/AnimateRoute";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserSuccess } from "./redux/Reducer/userSlice";
+import { getBookGrouped } from "./redux/Action/bookAction";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -22,10 +23,14 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        //* User
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
             dispatch(getUserSuccess(user));
         }
+
+        //* Book
+        dispatch(getBookGrouped());
     }, [dispatch]);
 
     return (

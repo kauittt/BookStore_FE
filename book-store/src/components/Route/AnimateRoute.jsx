@@ -19,8 +19,8 @@ const AnimateRoute = () => {
             <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/" element={<MainPage />}>
                 <Route path="/home" element={<HomePage />} />
-                <Route path="/books" element={<BookPage />} />
-                <Route path="/books/:id" element={<BookDetailPage />} />
+                <Route path="/books/:category" element={<BookPage />} />
+                <Route path="/books/detail/:id" element={<BookDetailPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/admin" element={<AdminPage />} />

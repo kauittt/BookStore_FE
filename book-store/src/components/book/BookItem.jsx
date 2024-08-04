@@ -5,15 +5,34 @@ import {
     faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSelectedBook } from "../../redux/Reducer/bookSlice";
 
 const BookItem = (props) => {
     const navigate = useNavigate();
-    const id = props.id ? props.id : 1;
-    const temp = "/books/" + id;
+    const dispatch = useDispatch();
+
+    const path = "/books/detail/" + props.id;
+
+    const handleDetail = (e) => {
+        console.log("Handle Detail -> BookDetail");
+        e.stopPropagation();
+        dispatch(
+            setSelectedBook({
+                id: props.id,
+                name: props.name,
+                author: props.author,
+                image: props.image,
+                price: props.price,
+                description: props.description,
+            })
+        );
+        navigate(path);
+    };
     //* 67
     return (
         <div
-            onClick={() => navigate(temp)}
+            onClick={handleDetail}
             className="group m-w-[300px] w-[300px] h-[400px] m-h-[400px] bg-bgr-main  rounded p-[20px]
                         overflow-hidden
                         shadow-custom
@@ -51,10 +70,7 @@ const BookItem = (props) => {
                             className="text-text-white text-2xl mx-2 p-[10px]  rounded
                         hover:bg-text-color transition-opacity duration-200 ease-in-out
                         shadow-custom"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(temp);
-                            }}
+                            onClick={handleDetail}
                         >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </span>
@@ -97,6 +113,7 @@ BookItem.propTypes = {
     price: PropTypes.string,
     name: PropTypes.string,
     author: PropTypes.string,
+    description: PropTypes.string,
 };
 
 export default BookItem;

@@ -1,5 +1,7 @@
-import React from "react";
+import { useParams } from "react-router-dom";
 import BookList from "../book/BookList";
+import { useSelector } from "react-redux";
+import { selectViewAll } from "./../../redux/Reducer/bookSlice";
 
 const BookPage = () => {
     const data = [
@@ -89,9 +91,14 @@ const BookPage = () => {
         },
     ];
 
+    console.log("Book Page");
+
+    const { category } = useParams();
+    const books = useSelector(selectViewAll);
+
     return (
         <div className="container mx-auto pb-[50px]">
-            <BookList books={data} title="Classics"></BookList>
+            <BookList books={books} title={category}></BookList>
         </div>
     );
 };

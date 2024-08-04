@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import FormButton from "../elements/FormButton";
 import BackNavigation from "../elements/BackNavigation";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSelectedBook } from "../../redux/Reducer/bookSlice";
 
 const BookDetailPage = (props) => {
     //! Xem qua cái này
@@ -17,19 +19,23 @@ const BookDetailPage = (props) => {
     //     state.books.list.find((book) => book.id === parseInt(id))
     // );
 
-    const book = props.book
-        ? props.book
-        : {
-              image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
-              price: "5.9",
-              name: "Dune",
-              author: "Frank Herbert ",
-              quantity: 10,
-              description:
-                  "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
-          };
+    // const book = props.book
+    //     ? props.book
+    //     : {
+    //           image: "https://nhasachphuongnam.com/images/thumbnails/240/290/detailed/287/con-duong-hoi-giao-tb-2024.jpg",
+    //           price: "5.9",
+    //           name: "Dune",
+    //           author: "Frank Herbert ",
+    //           quantity: 10,
+    //           description:
+    //               "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections",
+    //       };
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const book = useSelector(selectSelectedBook);
+    console.log("Book Detail Page");
+    console.log(book);
 
     return (
         <div className="flex flex-col gap-[30px] container mx-auto">
@@ -54,7 +60,7 @@ const BookDetailPage = (props) => {
                 </div>
 
                 {/*//* Info  */}
-                <div className="flex flex-col gap-[30px] justify-between">
+                <div className="flex-1 flex flex-col gap-[30px] justify-between">
                     <div className="flex justify-between items-center">
                         {/*//* Title */}
                         <div className="flex flex-col gap-[10px]">

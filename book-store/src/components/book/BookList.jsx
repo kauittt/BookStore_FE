@@ -1,12 +1,18 @@
 import PropTypes from "prop-types";
 import BookItem from "./BookItem";
-import { Link, useNavigate } from "react-router-dom";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import BackNavigation from "../elements/BackNavigation";
+import { setViewAllBooks } from "../../redux/Reducer/bookSlice";
+import { useDispatch } from "react-redux";
 
 const BookList = ({ full = true, ...props }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleViewAll = () => {
+        dispatch(setViewAllBooks(props.books));
+        navigate(`/books/${props.title}`);
+    };
 
     return (
         <div className="flex flex-col gap-[20px] ">
@@ -20,7 +26,7 @@ const BookList = ({ full = true, ...props }) => {
 
                 {!full && (
                     <p
-                        onClick={() => navigate("/books")}
+                        onClick={handleViewAll}
                         className="font-semibold cursor-pointer 
                     transition-base
                     text-bgr-color hover:text-bgr-color-hover "
@@ -42,11 +48,12 @@ const BookList = ({ full = true, ...props }) => {
                             <BookItem
                                 key={index}
                                 image={book.image}
-                                price={book.price}
+                                price={book.price + ""}
                                 name={book.name}
                                 author={book.author}
+                                description={book.description}
                                 //! id
-                                // id={book.id}
+                                id={book.id + ""}
                             />
                         );
                     })}
