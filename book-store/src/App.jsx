@@ -1,9 +1,10 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import AnimateRoute from "./components/Route/AnimateRoute";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserSuccess } from "./redux/Reducer/userSlice";
+import { selectUser } from "./redux/Reducer/userSlice";
 import { getBookGrouped } from "./redux/Action/bookAction";
+import { getCartInfoById } from "./redux/Action/cartAction";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -21,38 +22,24 @@ const App = () => {
     //* UserPage, CheckoutPage
 
     const dispatch = useDispatch();
+    const user = useSelector(selectUser);
 
     useEffect(() => {
-        //* User
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user) {
-            dispatch(getUserSuccess(user));
-        }
+        if (user && user.id) {
+            console.log("useEffect to load data...");
 
-        //* Book
-        dispatch(getBookGrouped());
-    }, [dispatch]);
+            console.log("Gọi cart và book nè");
+            dispatch(getCartInfoById(user.id));
+            dispatch(getBookGrouped());
+        } else {
+            console.log("No user found in localStorage");
+        }
+    }, [dispatch, user]);
 
     return (
         <Router>
             <AnimateRoute></AnimateRoute>
         </Router>
-
-        // // container mx-auto
-        // <div className="text-text-normal  cursor-default select-none">
-        //     <Nav></Nav>
-        //     {/* <Card name="Sản phẩm" quantity="15" icon={faList}></Card> */}
-
-        //     {/* <AdminPage books={enhancedData}></AdminPage> */}
-        //     {/* <ManageList books={enhancedData}></ManageList> */}
-        //     {/* <AdminNav></AdminNav> */}
-        //     {/* <Checkout books={enhancedData}></Checkout> */}
-        //     {/* <Cart books={enhancedData}></Cart> */}
-        //     {/* <CartItem book={detail}></CartItem> */}
-        // <BookDetail book={detail}></BookDetail>
-        //     {/* <BookList title="Classic" books={data}></BookList> */}
-        //     {/* <Login></Login> */}
-        // </div>
     );
 };
 

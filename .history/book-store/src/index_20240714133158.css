@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+    width: 100%; // Ensure the container takes the full width of its parent by default
+}
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px; // Sets the maximum width of the container to 640px when the viewport is at least 640px wide
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px; // Adjusts the maximum width to 768px for viewports at least 768px wide
+    }
+}
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px; // Adjusts to 1024px for viewports at least 1024px wide
+    }
+}
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px; // Adjusts to 1280px for viewports at least 1280px wide
+    }
+}
+@media (min-width: 1400px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1320px; // Sets a max-width of 1320px for all container classes when the viewport is at least 1400px wide
+    }
+}

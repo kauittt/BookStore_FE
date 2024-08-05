@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import MainPage from "../pages/MainPage";
 import HomePage from "../pages/HomePage";
 import CartPage from "../pages/CartPage";
@@ -10,8 +10,10 @@ import UserPage from "../pages/UserPage";
 import LoginPage from "../pages/LoginPage";
 
 const AnimateRoute = () => {
+    const location = useLocation();
+
     return (
-        <Routes>
+        <Routes location={location} key={location.pathname}>
             <Route path="/login" element={<LoginPage />} />
 
             <Route path="/admin" element={<AdminPage />} />

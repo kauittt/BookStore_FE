@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../redux/Action/userAction";
 import { selectUser } from "../../redux/Reducer/userSlice";
+import { getBookGrouped } from "../../redux/Action/bookAction";
+import { getCartInfoByUsername } from "../../redux/Action/cartAction";
 
 const LoginPage = () => {
     const [purpose, setPurpose] = useState("login");
@@ -102,6 +104,15 @@ const LoginPage = () => {
                 dispatch(
                     getUserInfo(credentials.username, response.data.accessToken)
                 );
+
+                dispatch(
+                    getCartInfoByUsername(
+                        credentials.username,
+                        response.data.accessToken
+                    )
+                );
+                dispatch(getBookGrouped(response.data.accessToken));
+
                 navigate("/home");
             }
         } catch (error) {

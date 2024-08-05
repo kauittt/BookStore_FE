@@ -8,7 +8,7 @@ import {
 
 export const getUserInfo = (username, accessToken) => {
     return (dispatch) => {
-        UserService.getUserByUsername(username, accessToken)
+        UserService.fetchUserByUsername(username, accessToken)
             .then((response) => {
                 const userData = response.data;
                 localStorage.setItem("user", JSON.stringify(userData));

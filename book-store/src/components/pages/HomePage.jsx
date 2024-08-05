@@ -1,7 +1,10 @@
 import BookList from "../book/BookList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/Reducer/userSlice";
 import { selectBook } from "../../redux/Reducer/bookSlice";
+import { selectCart } from "../../redux/Reducer/cartSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
     // const data = [
@@ -90,12 +93,27 @@ const HomePage = () => {
     //         description: "An unforgettable story of courage and resilience.",
     //     },
     // ];
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+            navigate("/login");
+        }
+    }, [navigate]);
+
     const user = useSelector(selectUser);
     const booksGrouped = useSelector(selectBook);
+    const cart = useSelector(selectCart);
 
     //! Just for console.log
+    console.log("BOOK");
     console.log(booksGrouped);
-    // console.log("User data:", user);
+    console.log("USER");
+    console.log(user);
+    console.log("CART");
+    console.log(cart);
 
     return (
         <div
