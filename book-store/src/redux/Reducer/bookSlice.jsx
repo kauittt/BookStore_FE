@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    books: null,
-    viewAll: null,
-    selected: null,
+    books: [],
+    viewAll: [],
+    selected: [],
     error: null,
 };
 

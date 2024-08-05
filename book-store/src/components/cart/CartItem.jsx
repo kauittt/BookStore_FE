@@ -8,7 +8,7 @@ const CartItem = (props) => {
     const book = props.book;
     const name = book.name + " - " + book.author;
 
-    const [quantity, setQuantity] = useState(book.quantity); // Default quantity
+    const [quantity, setQuantity] = useState(props.quantity); // Default quantity
     const increment = () => {
         setQuantity((prev) => prev + 1);
         props.updateTotalPrice(book.price);
@@ -89,6 +89,7 @@ const CartItem = (props) => {
 
 CartItem.propTypes = {
     book: PropTypes.object,
+    quantity: PropTypes.number,
     updateTotalPrice: PropTypes.func,
     handleRemove: PropTypes.func,
 };

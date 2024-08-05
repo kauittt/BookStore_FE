@@ -9,8 +9,8 @@ const Cart = (props) => {
 
     useEffect(() => {
         let total = 0;
-        props.books.forEach((book) => {
-            total += book.price * book.quantity;
+        props.books?.forEach((item) => {
+            total += item.book.price * item.cartQuantity;
         });
         setTotalPrice(total);
     }, [props.books]);
@@ -57,9 +57,10 @@ const Cart = (props) => {
 
             {/*//* Cart Items */}
             <div className="flex flex-col">
-                {props.books?.map((book, index) => (
+                {props.books?.map((item, index) => (
                     <CartItem
-                        book={book}
+                        book={item.book}
+                        quantity={item.cartQuantity}
                         key={index}
                         updateTotalPrice={updateTotalPrice}
                         handleRemove={handleRemove}
