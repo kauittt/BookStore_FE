@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { selectUser } from "./redux/Reducer/userSlice";
 import { getBookGrouped } from "./redux/Action/bookAction";
 import { getCartInfoById } from "./redux/Action/cartAction";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
     //! Width - Height: 1536 - 703
@@ -26,9 +28,6 @@ const App = () => {
 
     useEffect(() => {
         if (user && user.id) {
-            console.log("useEffect to load data...");
-
-            console.log("Gọi cart và book nè");
             dispatch(getCartInfoById(user.id));
             dispatch(getBookGrouped());
         } else {
@@ -39,6 +38,7 @@ const App = () => {
     return (
         <Router>
             <AnimateRoute></AnimateRoute>
+            <ToastContainer />
         </Router>
     );
 };

@@ -3,26 +3,47 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import QuantitySelector from "./QuantitySelector";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/Reducer/userSlice";
+import { updateCart } from "../../redux/Action/cartAction";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const CartItem = (props) => {
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
     const book = props.book;
+
     const name = book.name + " - " + book.author;
 
-    const [quantity, setQuantity] = useState(props.quantity); // Default quantity
-    const increment = () => {
-        setQuantity((prev) => prev + 1);
-        props.updateTotalPrice(book.price);
-    };
-    const decrement = () => {
-        if (quantity > 0) {
-            setQuantity((prev) => prev - 1);
-            props.updateTotalPrice(-book.price);
-        }
-    };
-
+    const [quantity, setQuantity] = useState(props.quantity);
     const calculateTotal = () => {
         const total = (quantity * book.price).toFixed(2);
         return total;
+    };
+
+    const handleChangeQuantity = async (quantity) => {
+        const response = await dispatch(
+            updateCart(user.id, props.book.id, quantity)
+        );
+        if (response.success) setQuantity((prev) => prev + quantity);
+    };
+
+    const handleRemove = async () => {
+        const response = await dispatch(
+            updateCart(user.id, props.book.id, -9999)
+        );
+        if (response.success) {
+            toast.info("Remove book successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     };
 
     return (
@@ -61,8 +82,7 @@ const CartItem = (props) => {
             <div className="w-[128px] ">
                 <QuantitySelector
                     quantity={quantity}
-                    increment={increment}
-                    decrement={decrement}
+                    handleChangeQuantity={handleChangeQuantity}
                 ></QuantitySelector>
             </div>
 
@@ -81,7 +101,7 @@ const CartItem = (props) => {
                 text-xl hover:text-text-error 
                 transition-all duration-200 ease-in-out cursor-pointer"
                 icon={faTrash}
-                onClick={props.handleRemove}
+                onClick={handleRemove}
             />
         </div>
     );
@@ -90,8 +110,6 @@ const CartItem = (props) => {
 CartItem.propTypes = {
     book: PropTypes.object,
     quantity: PropTypes.number,
-    updateTotalPrice: PropTypes.func,
-    handleRemove: PropTypes.func,
 };
 
 export default CartItem;

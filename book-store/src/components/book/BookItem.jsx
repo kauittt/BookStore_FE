@@ -5,17 +5,21 @@ import {
     faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedBook } from "../../redux/Reducer/bookSlice";
+import { updateCart } from "../../redux/Action/cartAction";
+import { selectUser } from "../../redux/Reducer/userSlice";
+import { toast } from "react-toastify";
+import { handleCartUpdate } from "../utils/cartUtils";
 
 const BookItem = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const user = useSelector(selectUser);
 
     const path = "/books/detail/" + props.id;
 
     const handleDetail = (e) => {
-        console.log("Handle Detail -> BookDetail");
         e.stopPropagation();
         dispatch(
             setSelectedBook({
@@ -28,6 +32,11 @@ const BookItem = (props) => {
             })
         );
         navigate(path);
+    };
+
+    const handleAddToCart = async (e) => {
+        e.stopPropagation();
+        await handleCartUpdate(dispatch, user.id, props.id, 1);
     };
     //* 67
     return (
@@ -78,15 +87,9 @@ const BookItem = (props) => {
                             className="text-text-white text-2xl mx-2 rounded p-[10px]
                         hover:bg-text-color transition-opacity duration-200 ease-in-out
                         shadow-custom"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                navigate("/cart");
-                            }}
+                            onClick={handleAddToCart}
                         >
-                            <FontAwesomeIcon
-                                icon={faCartShopping}
-                                //! Tạm thời là navigate("/cart"), cần handle để add item to cart
-                            />
+                            <FontAwesomeIcon icon={faCartShopping} />
                         </span>
                     </div>
                 </div>

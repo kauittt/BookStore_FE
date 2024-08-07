@@ -16,11 +16,16 @@ const cartSlice = createSlice({
         getCartFailed(state, action) {
             state.error = action.payload;
         },
+        setCartError(state, action) {
+            state.error = action.payload;
+        },
     },
 });
 
-export const { getCartSuccess, getCartFailed } = cartSlice.actions;
+export const { getCartSuccess, getCartFailed, setCartError } =
+    cartSlice.actions;
 
 export const selectCart = (state) => state.cart.cart;
+export const selectCartError = (state) => state.cart.error;
 
 export default cartSlice.reducer;

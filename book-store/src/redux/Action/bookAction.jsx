@@ -8,11 +8,9 @@ export const getBookGrouped = (accessToken) => {
     return (dispatch) => {
         BookService.fetchBookGrouped(accessToken)
             .then((response) => {
-                console.log("Fetch Book ok");
                 dispatch(getBookGroupedSuccess(response.data));
             })
             .catch((error) => {
-                console.log("Fetch Book error");
                 dispatch(getBookGroupedFailed(error.message));
             });
     };

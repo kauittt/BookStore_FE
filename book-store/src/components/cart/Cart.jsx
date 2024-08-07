@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Cart = (props) => {
+    const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
@@ -14,20 +15,6 @@ const Cart = (props) => {
         });
         setTotalPrice(total);
     }, [props.books]);
-
-    const updateTotalPrice = (priceChange) => {
-        setTotalPrice(
-            (prevTotal) => parseFloat(prevTotal) + parseFloat(priceChange)
-        );
-    };
-
-    const handleRemove = () => {
-        console.log("Handle remove: Line24 - Cart.jsx");
-    };
-
-    const navigate = useNavigate();
-
-    // border-t border-b border-border
 
     return (
         <div className="">
@@ -62,8 +49,6 @@ const Cart = (props) => {
                         book={item.book}
                         quantity={item.cartQuantity}
                         key={index}
-                        updateTotalPrice={updateTotalPrice}
-                        handleRemove={handleRemove}
                     ></CartItem>
                 ))}
             </div>
