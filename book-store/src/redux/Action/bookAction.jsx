@@ -5,14 +5,13 @@ import {
 } from "../Reducer/bookSlice";
 
 export const getBookGrouped = (accessToken) => {
-    return (dispatch) => {
-        BookService.fetchBookGrouped(accessToken)
-            .then((response) => {
-                dispatch(getBookGroupedSuccess(response.data));
-            })
-            .catch((error) => {
-                dispatch(getBookGroupedFailed(error.message));
-            });
+    return async (dispatch) => {
+        try {
+            const response = await BookService.fetchBookGrouped(accessToken);
+            dispatch(getBookGroupedSuccess(response.data));
+        } catch (error) {
+            dispatch(getBookGroupedFailed(error.message));
+        }
     };
 };
 

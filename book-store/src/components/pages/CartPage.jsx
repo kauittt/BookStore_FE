@@ -6,8 +6,6 @@ import {
     setCartError,
 } from "../../redux/Reducer/cartSlice";
 import { useEffect } from "react";
-import { getCartInfoById } from "../../redux/Action/cartAction";
-import { selectUser } from "../../redux/Reducer/userSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -34,7 +32,7 @@ const CartPage = () => {
 
     return (
         <div className="container mx-auto pb-[50px]">
-            <Cart books={cart.books}></Cart>
+            <Cart books={cart?.books}></Cart>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import BookList from "../book/BookList";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/Reducer/userSlice";
 import { selectBook } from "../../redux/Reducer/bookSlice";
 import { selectCart } from "../../redux/Reducer/cartSlice";
@@ -94,7 +94,6 @@ const HomePage = () => {
     //     },
     // ];
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");

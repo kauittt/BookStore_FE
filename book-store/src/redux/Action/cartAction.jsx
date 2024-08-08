@@ -1,4 +1,9 @@
-import { getCartFailed, getCartSuccess } from "../Reducer/cartSlice";
+import {
+    cleanCartFailed,
+    cleanCartSuccess,
+    getCartFailed,
+    getCartSuccess,
+} from "../Reducer/cartSlice";
 import CartService from "./../../services/CartService";
 
 export const getCartInfoById = (userId) => {
@@ -38,6 +43,18 @@ export const updateCart = (userId, bookId, quantity) => {
         } catch (error) {
             dispatch(getCartFailed(error.message));
             return { success: false, error: error.message };
+        }
+    };
+};
+
+export const cleanCart = (userId) => {
+    return async (dispatch) => {
+        try {
+            const response = await CartService.putCleanCart(userId);
+            console.log(response);
+            dispatch(cleanCartSuccess());
+        } catch (error) {
+            dispatch(cleanCartFailed(error.message));
         }
     };
 };
