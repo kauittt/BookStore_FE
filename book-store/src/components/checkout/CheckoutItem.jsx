@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const CheckoutItem = (props) => {
     const book = props.book;
     const name = book.name + " - " + book.author;
-    const total = (book.price * book.quantity).toFixed(2);
+    const total = (book.price * props.quantity).toFixed(2);
     return (
         <div
             className="flex justify-center items-center gap-[20px]
@@ -23,7 +23,7 @@ const CheckoutItem = (props) => {
                     className="absolute text-center w-[30px] h-[30px] top-[-10px] right-[-15px]
                 text-text-white text-lg bg-text-color rounded-full"
                 >
-                    {book.quantity}
+                    {props.quantity}
                 </p>
             </div>
             <p className="flex-1 text-center">{name}</p>
@@ -33,5 +33,6 @@ const CheckoutItem = (props) => {
 };
 CheckoutItem.propTypes = {
     book: PropTypes.object,
+    quantity: PropTypes.number,
 };
 export default CheckoutItem;

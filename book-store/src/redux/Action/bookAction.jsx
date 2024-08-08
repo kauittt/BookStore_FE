@@ -5,16 +5,13 @@ import {
 } from "../Reducer/bookSlice";
 
 export const getBookGrouped = (accessToken) => {
-    return (dispatch) => {
-        BookService.fetchBookGrouped(accessToken)
-            .then((response) => {
-                console.log("Fetch Book ok");
-                dispatch(getBookGroupedSuccess(response.data));
-            })
-            .catch((error) => {
-                console.log("Fetch Book error");
-                dispatch(getBookGroupedFailed(error.message));
-            });
+    return async (dispatch) => {
+        try {
+            const response = await BookService.fetchBookGrouped(accessToken);
+            dispatch(getBookGroupedSuccess(response.data));
+        } catch (error) {
+            dispatch(getBookGroupedFailed(error.message));
+        }
     };
 };
 

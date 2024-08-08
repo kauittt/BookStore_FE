@@ -11,7 +11,7 @@ const QuantitySelector = (props) => {
                     className="text-lg p-[10px] cursor-pointer text-text-color
                     hover:bg-text-color hover:text-text-white rounded
                      transition duration-200 ease-in-out"
-                    onClick={props.decrement}
+                    onClick={() => props.handleChangeQuantity(-1)}
                 />
                 <p className="w-[30px] text-center ">{props.quantity}</p>
                 <FontAwesomeIcon
@@ -19,7 +19,7 @@ const QuantitySelector = (props) => {
                     className="text-lg p-[10px] cursor-pointer text-text-color
                      hover:bg-text-color hover:text-text-white rounded
                      transition duration-200 ease-in-out"
-                    onClick={props.increment}
+                    onClick={() => props.handleChangeQuantity(1)}
                 />
             </div>
         </form>
@@ -28,8 +28,7 @@ const QuantitySelector = (props) => {
 
 QuantitySelector.propTypes = {
     quantity: PropTypes.number,
-    decrement: PropTypes.func,
-    increment: PropTypes.func,
+    handleChangeQuantity: PropTypes.func,
 };
 
 export default QuantitySelector;

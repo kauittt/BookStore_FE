@@ -1,25 +1,38 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cart from "../cart/Cart";
-import { selectCart } from "../../redux/Reducer/cartSlice";
+import {
+    selectCart,
+    selectCartError,
+    setCartError,
+} from "../../redux/Reducer/cartSlice";
 import { useEffect } from "react";
-import { getCartInfoById } from "../../redux/Action/cartAction";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CartPage = () => {
     const dispatch = useDispatch();
-
+    const cartError = useSelector(selectCartError);
     let cart = useSelector(selectCart);
+
     useEffect(() => {
-        if (!cart) {
-            const user = JSON.parse(localStorage.getItem("user"));
-            if (user) {
-                dispatch(getCartInfoById(user.id));
-            }
+        if (cartError) {
+            const error = `You have reached the maximum stock limit for this book.`;
+            toast.error(error, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            dispatch(setCartError(null));
         }
-    }, [dispatch, cart]);
+    }, [cartError, dispatch]);
 
     return (
         <div className="container mx-auto pb-[50px]">
-            <Cart books={cart.books}></Cart>
+            <Cart books={cart?.books}></Cart>
         </div>
     );
 };

@@ -5,26 +5,28 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import CheckoutItem from "./CheckoutItem";
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/Reducer/userSlice";
+import { addOrder } from "../../redux/Action/orderAction";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { cleanCart } from "../../redux/Action/cartAction";
 
 const Checkout = (props) => {
-    const notify = () =>
-        toast("Wow so easy!", {
-            style: { color: "#090937", fontWeight: 600 },
-        });
-
+    const user = useSelector(selectUser);
+    const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState(0);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let total = 0;
-        props.books.forEach((book) => {
-            total += book.price * book.quantity;
+        props.books?.forEach((item) => {
+            total += item.book.price * item.cartQuantity;
         });
         setTotalPrice(total.toFixed(2));
     }, [props.books]);
 
-    const shippingFee = 2;
     const validationSchema = Yup.object({
         name: Yup.string()
             .min(4, "Must be 6 characters or more!")
@@ -39,11 +41,28 @@ const Checkout = (props) => {
             .required("Address is required!"),
     });
 
-    //! Get data from User
     const initialValues = {
-        name: "Minh",
-        phone: "0937230092",
-        address: "Bao Vinh Long Khanh",
+        name: user.name || "",
+        phone: user.phone || "",
+        address: user.address || "",
+    };
+
+    //! Có thời gian hãy update thêm tính năng chọn item trong cart để check -> remove. Hiện tại đang lấy tất cả
+    const doAddOrder = async (body) => {
+        const response = await dispatch(addOrder(body));
+        if (response.success) {
+            toast.info("Order successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        await dispatch(cleanCart(user.id));
+        navigate("/home");
     };
 
     return (
@@ -65,16 +84,25 @@ const Checkout = (props) => {
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={(values, actions) => {
-                        //! Save field data to user if null
+                        console.log("check out nè");
+
+                        //* Extract bookIds and quantities from props.books
+                        const bookIds = props.books.map((item) => item.book.id);
+                        const quantities = props.books.map(
+                            (item) => item.cartQuantity
+                        );
+
+                        const body = {
+                            userId: user.id,
+                            bookIds: bookIds,
+                            quantities: quantities,
+                        };
+
+                        doAddOrder(body);
+
                         setTimeout(() => {
-                            console.log("Form submitted with values:", values);
-                            // actions.resetForm();
                             actions.setSubmitting(false);
                         }, 500);
-
-                        notify();
-                        console.log("API HERE");
-                        // Handle form submission
                     }}
                 >
                     {({ isSubmitting }) => (
@@ -109,7 +137,6 @@ const Checkout = (props) => {
                                     main={false}
                                 />
                             </div>
-                            <ToastContainer />
                         </Form>
                     )}
                 </Formik>
@@ -132,10 +159,11 @@ const Checkout = (props) => {
                         className="flex flex-col gap-[20px] py-[10px]
                         max-h-[430px] overflow-auto"
                     >
-                        {props.books?.map((book, index) => (
+                        {props.books?.map((item, index) => (
                             <CheckoutItem
                                 key={index}
-                                book={book}
+                                book={item.book}
+                                quantity={item.cartQuantity}
                             ></CheckoutItem>
                         ))}
                     </div>

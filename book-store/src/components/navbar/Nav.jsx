@@ -7,11 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { userLogout } from "../../redux/Reducer/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCart } from "../../redux/Reducer/cartSlice";
 
 const Nav = () => {
     const [isHovering, setIsHovering] = useState(false);
     const dispatch = useDispatch();
+    const cart = useSelector(selectCart);
+    const cartLength = cart?.books?.length || 0;
 
     const logout = () => {
         // Xóa accessToken và refreshToken từ localStorage
@@ -59,13 +62,21 @@ const Nav = () => {
                     id="navbar-search"
                 >
                     {/*//* Cart icon  */}
-                    <Link to="/cart">
+                    <Link to="/cart" className="group relative">
                         <FontAwesomeIcon
                             className="p-[15px] 
                             hover-main
                             transition-base"
                             icon={faCartShopping}
                         ></FontAwesomeIcon>
+                        <div
+                            className="flex flex-center 
+                            group-hover:hidden transition-base
+                            bg-bgr-white shadow-custom rounded-full
+                        absolute w-[30px] h-[30px] -top-[5px] -right-[5px] text-text-color"
+                        >
+                            {cartLength}
+                        </div>
                     </Link>
 
                     {/*//* User icon */}

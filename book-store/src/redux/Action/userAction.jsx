@@ -7,29 +7,30 @@ import {
 } from "../Reducer/userSlice";
 
 export const getUserInfo = (username, accessToken) => {
-    return (dispatch) => {
-        UserService.fetchUserByUsername(username, accessToken)
-            .then((response) => {
-                const userData = response.data;
-                localStorage.setItem("user", JSON.stringify(userData));
-                dispatch(getUserSuccess(userData));
-            })
-            .catch((error) => {
-                dispatch(getUserFailed(error.message));
-            });
+    return async (dispatch) => {
+        try {
+            const response = await UserService.fetchUserByUsername(
+                username,
+                accessToken
+            );
+            const userData = response.data;
+            localStorage.setItem("user", JSON.stringify(userData));
+            dispatch(getUserSuccess(userData));
+        } catch (error) {
+            dispatch(getUserFailed(error.message));
+        }
     };
 };
 
 export const updateUser = (user) => {
-    return (dispatch) => {
-        UserService.updateUser(user)
-            .then((response) => {
-                const userData = response.data;
-                localStorage.setItem("user", JSON.stringify(userData));
-                dispatch(updateUserSuccess(userData));
-            })
-            .catch((error) => {
-                dispatch(updateUserFailed(error.message));
-            });
+    return async (dispatch) => {
+        try {
+            const response = await UserService.updateUser(user);
+            const userData = response.data;
+            localStorage.setItem("user", JSON.stringify(userData));
+            dispatch(updateUserSuccess(userData));
+        } catch (error) {
+            dispatch(updateUserFailed(error.message));
+        }
     };
 };
