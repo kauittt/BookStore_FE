@@ -2,17 +2,44 @@ import OrderService from "../../services/OrderService";
 import {
     addOrderFailed,
     addOrderSuccess,
-    getOrderFailed,
+    getOrdersFailed,
     getOrdersSuccess,
+    getTotalOrdersFailed,
+    getTotalOrdersSuccess,
 } from "../Reducer/orderSlice";
 
-export const getOrders = (userId) => {
+export const getOrders = (accessToken) => {
     return async (dispatch) => {
         try {
-            const response = await OrderService.fetchOrder(userId);
+            const response = await OrderService.fetchOrders(accessToken);
+            dispatch(getTotalOrdersSuccess(response.data));
+        } catch (error) {
+            dispatch(getTotalOrdersFailed(error.message));
+        }
+    };
+};
+
+export const getOrdersByUserId = (userId) => {
+    return async (dispatch) => {
+        try {
+            const response = await OrderService.fetchOrdersByUserId(userId);
             dispatch(getOrdersSuccess(response.data));
         } catch (error) {
-            dispatch(getOrderFailed(error.message));
+            dispatch(getOrdersFailed(error.message));
+        }
+    };
+};
+
+export const getOrdersByUsername = (username, accessToken) => {
+    return async (dispatch) => {
+        try {
+            const response = await OrderService.fetchOrdersByUsername(
+                username,
+                accessToken
+            );
+            dispatch(getOrdersSuccess(response.data));
+        } catch (error) {
+            dispatch(getOrdersFailed(error.message));
         }
     };
 };

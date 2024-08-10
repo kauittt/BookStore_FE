@@ -5,6 +5,7 @@ import { selectBook } from "../../redux/Reducer/bookSlice";
 import { selectCart } from "../../redux/Reducer/cartSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { selectOrders } from "../../redux/Reducer/orderSlice";
 
 const HomePage = () => {
     // const data = [
@@ -105,6 +106,7 @@ const HomePage = () => {
     const user = useSelector(selectUser);
     const booksGrouped = useSelector(selectBook);
     const cart = useSelector(selectCart);
+    const orders = useSelector(selectOrders);
 
     //! Just for console.log
     console.log("BOOK");
@@ -113,6 +115,8 @@ const HomePage = () => {
     console.log(user);
     console.log("CART");
     console.log(cart);
+    console.log("ORDERS");
+    console.log(orders);
 
     return (
         <div

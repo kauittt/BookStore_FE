@@ -6,32 +6,53 @@ import FormButton from "./FormButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const Modal = ({ onClose, data, onSave }) => {
-    //! Xem các field name
-    //! Title
-    const title = "Books";
+const Modal = ({ onClose, data, mapping, content, ...props }) => {
+    const title = content === "book" ? "Edit Book" : "Edit Item";
+    const initialValues = {};
+    console.log(content);
 
-    const validationSchema = Yup.object({
-        image: Yup.string().required("Required"),
-        name: Yup.string().required("Required"),
-        author: Yup.string().required("Required"),
-        price: Yup.number().required("Required").positive("Must be positive"),
-        quantity: Yup.number()
-            .required("Required")
-            .positive("Must be positive"),
-        category: Yup.string().required("Required"),
-        description: Yup.string().required("Required"),
-    });
+    if (content === "book") {
+        Object.keys(data).forEach((field) => {
+            console.log("Log field");
+            console.log(field);
+            if (field === "field2" && data[field]) {
+                // Split the field2 value by " - " to get title and author
+                const [title, author] = data[field].split(" - ");
 
-    const initialValues = {
-        image: data.image || "",
-        name: data.name || "",
-        author: data.author || "",
-        price: data.price || "",
-        quantity: data.quantity || "",
-        category: data.category || "",
-        description: data.description || "",
-    };
+                // Assign title to field2 and author to field3
+                initialValues["field2"] = title || "";
+                initialValues["field3"] = author || "";
+            } else {
+                // Shift the remaining fields by one index
+                const fieldIndex = parseInt(field.replace("field", ""), 10);
+                if (fieldIndex > 2) {
+                    const newFieldIndex = fieldIndex + 1;
+                    initialValues[`field${newFieldIndex}`] = data[field];
+                } else {
+                    // Copy field1 as is
+                    initialValues[field] = data[field];
+                }
+            }
+        });
+
+        // Ensure that any required new fields are initialized if necessary
+        // initialValues.field7 = initialValues.field7 || "";
+    } else {
+        // Handle the initialization for non-book content types
+        Object.keys(data).forEach((field) => {
+            initialValues[field] = data[field] || "";
+        });
+    }
+
+    // Dynamically generate validation schema based on the mapping
+    const validationSchema = Yup.object(
+        Object.keys(mapping).reduce((schema, field) => {
+            schema[field] = Yup.string().required("Required");
+            return schema;
+        }, {})
+    );
+
+    console.log(initialValues);
 
     return (
         <div
@@ -58,65 +79,55 @@ const Modal = ({ onClose, data, onSave }) => {
                         validationSchema={validationSchema}
                         onSubmit={(values, actions) => {
                             console.log("Submit");
-                            onSave(values);
+                            const result = Object.keys(values).reduce(
+                                (acc, key) => {
+                                    const fieldName = mapping[key]; // Get the field name from the mapping
+                                    acc[fieldName] = values[key]; // Assign the value from updatedData to the new field name
+                                    return acc;
+                                },
+                                {}
+                            );
+
+                            props.handleUpdate(result);
                             onClose();
                             actions.setSubmitting(false);
                         }}
                     >
                         {({ isSubmitting }) => (
                             <Form className="p-4 md:p-5 grid grid-cols-2 gap-[10px]">
-                                <FormInput
-                                    label="Image URL"
-                                    id="image"
-                                    name="image"
-                                    placeholder="Enter image URL"
-                                />
-                                <FormInput
-                                    label="Name"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Type product name"
-                                />
-                                <FormInput
-                                    label="Author"
-                                    id="author"
-                                    name="author"
-                                    placeholder="Enter author's name"
-                                />
-                                <FormInput
-                                    label="Price"
-                                    id="price"
-                                    name="price"
-                                    placeholder="Enter price"
-                                    type="number"
-                                />
-                                <FormInput
-                                    label="Quantity"
-                                    id="quantity"
-                                    name="quantity"
-                                    placeholder="Enter quantity"
-                                    type="number"
-                                />
-                                <FormInput
-                                    label="Category"
-                                    id="category"
-                                    name="category"
-                                    as="select"
-                                >
-                                    <option value="">Select category</option>
-                                    <option value="TV">TV/Monitors</option>
-                                    <option value="PC">PC</option>
-                                    <option value="GA">Gaming/Console</option>
-                                    <option value="PH">Phones</option>
-                                </FormInput>
-                                <FormInput
-                                    label="Product Description"
-                                    id="description"
-                                    name="description"
-                                    placeholder="Write product description here"
-                                    as="textarea"
-                                    rows="4"
-                                />
+                                {Object.keys(initialValues).map(
+                                    (field, index) => (
+                                        <FormInput
+                                            key={index}
+                                            label={
+                                                mapping[field]?.toUpperCase() ||
+                                                field.toUpperCase()
+                                            }
+                                            id={field}
+                                            name={field}
+                                            placeholder={`Enter ${
+                                                mapping[field] || field
+                                            }`}
+                                            type={
+                                                field.includes("price") ||
+                                                field.includes("quantity")
+                                                    ? "number"
+                                                    : "text"
+                                            }
+                                            as={
+                                                field.includes("description")
+                                                    ? "textarea"
+                                                    : "input"
+                                            }
+                                            rows={
+                                                field.includes("description")
+                                                    ? 4
+                                                    : 1
+                                            }
+                                        />
+                                    )
+                                )}
+
                                 <div className="flex gap-[10px] items-center justify-end">
                                     <FormButton
                                         name="Save"
@@ -135,9 +146,12 @@ const Modal = ({ onClose, data, onSave }) => {
 };
 
 Modal.propTypes = {
+    category: PropTypes.array,
     onClose: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-    onSave: PropTypes.func.isRequired,
+    mapping: PropTypes.object,
+    content: PropTypes.string,
+    handleUpdate: PropTypes.func,
 };
 
 export default Modal;

@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInfo } from "../../redux/Action/userAction";
+import { getTotalUsers, getUserInfo } from "../../redux/Action/userAction";
 import { selectUser } from "../../redux/Reducer/userSlice";
-import { getBookGrouped } from "../../redux/Action/bookAction";
+import { getBookGrouped, getBook } from "../../redux/Action/bookAction";
 import { getCartInfoByUsername } from "../../redux/Action/cartAction";
+import { getOrders, getOrdersByUsername } from "../../redux/Action/orderAction";
 
 const LoginPage = () => {
     const [purpose, setPurpose] = useState("login");
@@ -101,17 +102,32 @@ const LoginPage = () => {
                     JSON.stringify(response.data.refreshToken)
                 );
 
+                //* User
                 dispatch(
                     getUserInfo(credentials.username, response.data.accessToken)
                 );
+                dispatch(getTotalUsers(response.data.accessToken));
 
+                //* Cart
                 dispatch(
                     getCartInfoByUsername(
                         credentials.username,
                         response.data.accessToken
                     )
                 );
+
+                //* Books
                 dispatch(getBookGrouped(response.data.accessToken));
+                dispatch(getBook(response.data.accessToken));
+
+                //* Orders
+                dispatch(
+                    getOrdersByUsername(
+                        credentials.username,
+                        response.data.accessToken
+                    )
+                );
+                dispatch(getOrders(response.data.accessToken));
 
                 navigate("/home");
             }

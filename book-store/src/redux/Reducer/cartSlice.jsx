@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { cleanCart } from "../Action/cartAction";
 
 const initialState = {
     cart: null,

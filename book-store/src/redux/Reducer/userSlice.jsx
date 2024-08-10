@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     user: JSON.parse(localStorage.getItem("user")) || null,
-    // isAuth: JSON.parse(localStorage.getItem("accessToken")) ? true : false,
+    totalUsers: null,
     error: null,
 };
 
@@ -17,6 +17,13 @@ const userSlice = createSlice({
         getUserFailed(state, action) {
             state.error = action.payload;
         },
+        getTotalUsersSuccess(state, action) {
+            state.totalUsers = action.payload;
+            state.error = null;
+        },
+        getTotalUsersFailed(state, action) {
+            state.error = action.payload;
+        },
         updateUserSuccess(state, action) {
             state.user = action.payload;
             state.error = null;
@@ -28,6 +35,9 @@ const userSlice = createSlice({
             state.user = null;
             state.error = null;
         },
+        deleteUserFailed(state, action) {
+            state.error = action.payload;
+        },
     },
 });
 
@@ -37,7 +47,11 @@ export const {
     userLogout,
     updateUserSuccess,
     updateUserFailed,
+    getTotalUsersSuccess,
+    getTotalUsersFailed,
+    deleteUserFailed,
 } = userSlice.actions;
 
 export const selectUser = (state) => state.user.user;
+export const selectTotalUsers = (state) => state.user.totalUsers;
 export default userSlice.reducer;

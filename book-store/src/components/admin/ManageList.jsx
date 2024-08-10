@@ -1,46 +1,38 @@
 import PropTypes from "prop-types";
 import ManageItem from "./ManageItem";
-const ManageList = (props) => {
-    //! Khi có data xem lại: name, width
+const ManageList = ({ data, content }) => {
+    const category = {
+        order: [
+            { name: "Serial", style: "w-[50px] text-center" },
+            { name: "Customer Name", style: "w-[150px] text-center" },
+            { name: "Book Title", style: "w-[150px] text-center" },
+            { name: "Quantity", style: "w-[100px] text-center" },
+            { name: "Price", style: "w-[100px] text-center" },
+            { name: "Phone Number", style: "w-[150px] text-center" },
+            { name: "Address", style: "flex-1 text-center" }, // Use flex for flexible widths
+        ],
+        book: [
+            { name: "Serial", style: "w-[60px] text-center" },
+            { name: "Image", style: "w-[80px] text-center" },
+            { name: "Book Title", style: "w-[250px] text-center" },
+            { name: "Category", style: "w-[100px] text-center" },
+            { name: "Stock", style: "w-[60px] text-center" },
+            { name: "Price", style: "w-[60px] text-center" },
+            { name: "Description", style: "flex-1 text-center" },
+        ],
+        user: [
+            { name: "Serial", style: "w-[50px] text-center" },
+            { name: "Username", style: "w-[150px] text-center" },
+            { name: "Name", style: "w-[200px] text-center" },
+            { name: "Role", style: "w-[100px] text-center" },
+            { name: "Email", style: "w-[200px] text-center" },
+            { name: "Phone Number", style: "w-[150px] text-center" },
+            { name: "Address", style: "flex-1 text-center" },
+        ],
+    };
 
-    const category = [
-        {
-            group: "Order",
-            fields: [
-                { name: "Serial", width: "50px" },
-                { name: "Customer Name", width: "150px" },
-                { name: "Book Title", width: "150px" },
-                { name: "Quantity", width: "100px" },
-                { name: "Price", width: "100px" },
-                { name: "Phone Number", width: "100px" },
-                { name: "Address", flex: "1" }, // Use flex for flexible widths
-            ],
-        },
-        {
-            group: "Book",
-            fields: [
-                { name: "Serial", style: "w-[60px] text-center" },
-                { name: "Image", style: "w-[80px] text-center" },
-                { name: "Book Title", style: "w-[250px] text-center" },
-                { name: "Category", style: "w-[100px] text-center" },
-                { name: "Stock", style: "w-[60px] text-center" },
-                { name: "Price", style: "w-[60px] text-center" },
-                { name: "Description", style: "flex-1 text-center" },
-            ],
-        },
-        {
-            group: "User",
-            fields: [
-                { name: "Serial", width: "50px" },
-                { name: "Username", width: "150px" },
-                { name: "Name", width: "200px" },
-                { name: "Role", width: "100px" },
-                { name: "Email", width: "200px" },
-                { name: "Phone Number", width: "150px" },
-                { name: "Address", flex: "1" },
-            ],
-        },
-    ];
+    console.log("Data to map ---------------");
+    console.log(data);
 
     return (
         //* Danh sách sản phẩm
@@ -54,19 +46,22 @@ const ManageList = (props) => {
                 className="flex justify-between items-center gap-[15px]
             font-semibold text-lg"
             >
-                {category[1].fields?.map((field, index) => (
-                    <p key={index} className={`${field.style} `}>
-                        {field.name}
+                {category[content]?.map((item, index) => (
+                    <p key={index} className={`${item.style} `}>
+                        {item.name}
                     </p>
                 ))}
             </div>
 
             {/*//* List Item */}
             <div className="flex flex-col max-h-full ">
-                {props.books?.map((book, index) => (
+                {data?.data?.map((item, index) => (
                     <ManageItem
-                        data={book}
-                        category={category[1].fields}
+                        data={item}
+                        category={category[content]}
+                        isImage={content === "book"}
+                        content={content}
+                        mapping={data.mapping}
                         key={index}
                         index={index}
                     ></ManageItem>
@@ -76,6 +71,7 @@ const ManageList = (props) => {
     );
 };
 ManageList.propTypes = {
-    books: PropTypes.array,
+    data: PropTypes.object,
+    content: PropTypes.string,
 };
 export default ManageList;
