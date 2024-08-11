@@ -8,10 +8,13 @@ import {
     getTotalOrdersSuccess,
 } from "../Reducer/orderSlice";
 
-export const getOrders = (accessToken) => {
+let accessToken = JSON.parse(localStorage.getItem("accessToken"));
+
+export const getOrders = (paraToken) => {
+    const token = paraToken || accessToken;
     return async (dispatch) => {
         try {
-            const response = await OrderService.fetchOrders(accessToken);
+            const response = await OrderService.fetchOrders(token);
             dispatch(getTotalOrdersSuccess(response.data));
         } catch (error) {
             dispatch(getTotalOrdersFailed(error.message));
@@ -57,16 +60,14 @@ export const addOrder = (body) => {
     };
 };
 
-// export const updateUser = (user) => {
-//     return (dispatch) => {
-//         UserService.updateUser(user)
-//             .then((response) => {
-//                 const userData = response.data;
-//                 localStorage.setItem("user", JSON.stringify(userData));
-//                 dispatch(updateUserSuccess(userData));
-//             })
-//             .catch((error) => {
-//                 dispatch(updateUserFailed(error.message));
-//             });
-//     };
-// };
+export const updateOrder = (body) => {
+    return async (dispatch) => {
+        try {
+            await OrderService.putUpdateOrder(body);
+
+            await dispatch(getOrders());
+        } catch (error) {
+            dispatch(getOrdersFailed(error.message));
+        }
+    };
+};

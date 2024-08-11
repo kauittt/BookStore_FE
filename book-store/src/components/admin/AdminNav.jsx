@@ -33,7 +33,7 @@ const AdminNav = (props) => {
                     className="p-[16px] 
             transition-all duration-200 ease-in-out
             group hover:bg-bgr-white hover:shadow-custom rounded
-            cursor-pointer"
+            cursor-not-allowed opacity-50"
                 >
                     <p className="flex gap-[10px]">
                         <FontAwesomeIcon

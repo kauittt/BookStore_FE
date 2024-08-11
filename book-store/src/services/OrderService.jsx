@@ -52,6 +52,18 @@ const OrderService = {
             })
             .post(`orders`, body);
     },
+    putUpdateOrder: (body) => {
+        return axios
+            .create({
+                baseURL: "http://localhost:8080/",
+                timeout: 5000,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`, // Pass token here!!
+                },
+            })
+            .put(`orders/${body.id}`, body);
+    },
 };
 
 export default OrderService;

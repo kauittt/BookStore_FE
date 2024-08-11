@@ -6,6 +6,7 @@ import Modal from "../elements/Modal";
 import { useDispatch } from "react-redux";
 import { removeBook, updateBook } from "../../redux/Action/bookAction";
 import { removeUser, updateUser } from "../../redux/Action/userAction";
+import { updateOrder } from "../../redux/Action/orderAction";
 
 const ManageItem = ({
     data,
@@ -40,7 +41,7 @@ const ManageItem = ({
 
         if (content === "book") {
             dispatch(updateBook(updateData.id, updateData));
-        } else {
+        } else if (content === "user") {
             const roleMapping = {
                 USER: { id: 1, authority: "ROLE_USER" },
                 ADMIN: { id: 2, authority: "ROLE_ADMIN" },
@@ -56,6 +57,10 @@ const ManageItem = ({
 
             console.log("Transformed updateData:", updateData);
             dispatch(updateUser(updateData));
+        } else if (content == "order") {
+            dispatch(updateOrder(updateData));
+        } else {
+            console.log("No content");
         }
     };
 
@@ -63,8 +68,10 @@ const ManageItem = ({
         console.log("Delete");
         if (content == "book") {
             dispatch(removeBook(data.field0));
-        } else {
+        } else if (content === "user") {
             dispatch(removeUser(data.field0));
+        } else if (content === "order") {
+            console.log("Handle Delte Order is not allowed now");
         }
     };
 
@@ -126,8 +133,10 @@ const ManageItem = ({
                         onClick={handleEditClick}
                     />
                     <FontAwesomeIcon
-                        className="hover-sub transition-base
-                        p-[6px]"
+                        className={`hover-sub transition-base
+                        p-[6px] ${
+                            content === "order" ? "cursor-not-allowed" : ""
+                        }`}
                         icon={faTrash}
                         onClick={handleDelete}
                     />
