@@ -36,6 +36,7 @@ const BookItem = (props) => {
 
     const handleAddToCart = async (e) => {
         e.stopPropagation();
+
         await handleCartUpdate(dispatch, user.id, props.id, 1);
     };
     //* 67

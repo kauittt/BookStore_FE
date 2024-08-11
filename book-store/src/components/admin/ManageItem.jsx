@@ -1,30 +1,78 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faCaretDown, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Modal from "../elements/Modal";
+import { useDispatch } from "react-redux";
+import { removeBook, updateBook } from "../../redux/Action/bookAction";
+import { removeUser, updateUser } from "../../redux/Action/userAction";
+import { updateOrder } from "../../redux/Action/orderAction";
 
-const ManageItem = (props) => {
+const ManageItem = ({
+    data,
+    category,
+    isImage,
+    mapping,
+    content,
+    ...props
+}) => {
     // STT | Tên khách | Tên sách | Số lượng | Giá     | Phone | Address
     // STT | Hình      | Tên sách | Danh mục | Tồn kho | Giá   | Mô tả
     // STT | Username  | Name     | Role     | Email   | Phone | Address
 
-    //! Handle Edit
-    //! Căn chỉnh khi đổi ở AdminPage (khi chọn nav bên trái)
-    const isImage = props.data.image ? true : false;
+    console.log("ManageItem-----");
+    console.log(data);
+    // console.log(category);
+    console.log(mapping);
 
     //* Handle model
     const [showModal, setShowModal] = useState(false);
     const [currentData, setCurrentData] = useState({});
+    const dispatch = useDispatch();
 
     const handleEditClick = () => {
-        setCurrentData(props.data);
+        setCurrentData(data);
         setShowModal(true);
     };
 
-    const handleSave = (updatedData) => {
-        console.log("Updated data:", updatedData);
-        // Add logic to update the data in the parent component or backend
+    const handleUpdate = (updateData) => {
+        console.log("Update data for " + content);
+        console.log(updateData);
+
+        if (content === "book") {
+            dispatch(updateBook(updateData.id, updateData));
+        } else if (content === "user") {
+            const roleMapping = {
+                USER: { id: 1, authority: "ROLE_USER" },
+                ADMIN: { id: 2, authority: "ROLE_ADMIN" },
+            };
+
+            // Transform the authorities field in updateData
+            if (updateData.authorities) {
+                updateData.authorities = updateData.authorities
+                    .split(", ") // Split the string by ", " to get an array of roles
+                    .map((role) => roleMapping[role]) // Map each role to its corresponding object
+                    .filter(Boolean); // Remove any undefined roles (in case there's a role that doesn't match)
+            }
+
+            console.log("Transformed updateData:", updateData);
+            dispatch(updateUser(updateData));
+        } else if (content == "order") {
+            dispatch(updateOrder(updateData));
+        } else {
+            console.log("No content");
+        }
+    };
+
+    const handleDelete = () => {
+        console.log("Delete");
+        if (content == "book") {
+            dispatch(removeBook(data.field0));
+        } else if (content === "user") {
+            dispatch(removeUser(data.field0));
+        } else if (content === "order") {
+            console.log("Handle Delte Order is not allowed now");
+        }
     };
 
     return (
@@ -33,57 +81,76 @@ const ManageItem = (props) => {
                 gap-[15px] min-h-[80px] h-[80px] relative
                 border-b border-border"
         >
-            <p
-                className={`${props.category[0].style} font-semibold text-text-color`}
-            >
+            <p className={`${category[0].style} font-semibold text-text-color`}>
                 {props.index + 1}
             </p>
 
             {isImage ? (
                 <div
-                    className={`${props.category[1].style} h-full 
+                    className={`${category[1].style} h-full 
                 flex items-center justify-center`}
                 >
                     <img
                         className="w-[60px] h-full object-cover"
-                        src={props.data.image}
+                        src={data.field1}
                         alt="Image"
                     />
                 </div>
             ) : (
-                <p className={`${props.category[1].style} `}>Tăng Khải Minh</p>
+                <p className={`${category[1].style} `}>{data.field1}</p>
             )}
 
-            <p className={`${props.category[2].style} `}>
-                {props.data.name + " - " + props.data.author}
-            </p>
+            <p className={`${category[2].style} `}>{data.field2}</p>
 
-            <p className={`${props.category[3].style} `}>Danh mục</p>
+            <p className={`${category[3].style} `}>{data.field3}</p>
 
-            <p className={`${props.category[4].style} `}>
-                {props.data.quantity}
-            </p>
+            <p className={`${category[4].style} `}>{data.field4}</p>
 
-            <p className={`${props.category[5].style} `}>{props.data.price}$</p>
+            <p className={`${category[5].style} `}>{data.field5}$</p>
 
-            <p className={`${props.category[6].style} `}>
-                {props.data.description}
-            </p>
+            <p className={`${category[6].style} `}>{data.field6}</p>
 
-            <FontAwesomeIcon
-                className="absolute right-[-38px] p-[10px] rounded cursor-pointer
-                text-bgr-color
-                transition-all duration-200 ease-in-out
-                hover:bg-bgr-color hover:text-text-white  "
-                icon={faPen}
-                onClick={handleEditClick}
-            />
+            {/* //* Button */}
+            <div className="relative group">
+                {/* faCaretDown is always visible */}
+                <FontAwesomeIcon
+                    className="p-[10px] text-text-color cursor-pointer"
+                    icon={faCaretDown}
+                />
 
-            {showModal && (
+                {/* Hidden div containing faPen and faTrash icons */}
+                <div
+                    className="flex gap-[5px]
+                    absolute right-[0px] top-[30px]
+                    rounded cursor-pointer  
+                    transition-base
+                    opacity-0  group-hover:opacity-100"
+                >
+                    <FontAwesomeIcon
+                        className="hover-sub transition-base
+                        p-[6px]"
+                        icon={faPen}
+                        onClick={handleEditClick}
+                    />
+                    <FontAwesomeIcon
+                        className={`hover-sub transition-base
+                        p-[6px] ${
+                            content === "order" ? "cursor-not-allowed" : ""
+                        }`}
+                        icon={faTrash}
+                        onClick={handleDelete}
+                    />
+                </div>
+            </div>
+
+            {showModal && data && (
                 <Modal
+                    category={category}
                     onClose={() => setShowModal(false)}
                     data={currentData}
-                    onSave={handleSave}
+                    handleUpdate={handleUpdate}
+                    mapping={mapping}
+                    content={content}
                 />
             )}
         </div>
@@ -93,5 +160,8 @@ ManageItem.propTypes = {
     data: PropTypes.object,
     category: PropTypes.array,
     index: PropTypes.number,
+    isImage: PropTypes.bool,
+    content: PropTypes.string,
+    mapping: PropTypes.object,
 };
 export default ManageItem;

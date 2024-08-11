@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-const AdminNav = () => {
+const AdminNav = (props) => {
     const navigate = useNavigate();
     return (
         <div
@@ -33,7 +33,7 @@ const AdminNav = () => {
                     className="p-[16px] 
             transition-all duration-200 ease-in-out
             group hover:bg-bgr-white hover:shadow-custom rounded
-            cursor-pointer"
+            cursor-not-allowed opacity-50"
                 >
                     <p className="flex gap-[10px]">
                         <FontAwesomeIcon
@@ -48,6 +48,7 @@ const AdminNav = () => {
             transition-all duration-200 ease-in-out
             group hover:bg-bgr-white hover:shadow-custom rounded
             cursor-pointer"
+                    onClick={() => props.setContent("book")}
                 >
                     <p className="flex gap-[10px]">
                         <FontAwesomeIcon
@@ -62,6 +63,7 @@ const AdminNav = () => {
             transition-all duration-200 ease-in-out
             group hover:bg-bgr-white hover:shadow-custom rounded
             cursor-pointer"
+                    onClick={() => props.setContent("user")}
                 >
                     <p className="flex gap-[10px]">
                         <FontAwesomeIcon
@@ -76,6 +78,7 @@ const AdminNav = () => {
             transition-all duration-200 ease-in-out
             group hover:bg-bgr-white hover:shadow-custom rounded
             cursor-pointer"
+                    onClick={() => props.setContent("order")}
                 >
                     <p className="flex gap-[10px]">
                         <FontAwesomeIcon
@@ -91,6 +94,6 @@ const AdminNav = () => {
 };
 
 AdminNav.propTypes = {
-    book: PropTypes.object,
+    setContent: PropTypes.func,
 };
 export default AdminNav;
